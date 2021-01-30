@@ -116,6 +116,15 @@ export default {
                 qty:item.quantity
                 };
                 arr.push(jsonObj);
+                    _this.$http.delete('/cart/'+item.id,{
+                    params: {
+                            _token:_this.token
+                        }
+                    }).then(function(success) {
+                        _this.loadItems();
+                    }, function(error) {
+                        console.log(error);
+                    });  
             };
             });
             if(_this.value1<=_this.value2){
@@ -155,7 +164,8 @@ export default {
             });
         };
             _this.items=[];
-            console.log(_this.items);               
+            console.log(_this.items);   
+                      
                                 
             /*var _this = this;
             this.$http.post('/borrows',{

@@ -28,15 +28,21 @@ class SendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(){
+        return view('/home');
+    }
+    public function lookup(Request $request)
     {
+        $this->validate($request, [
+            'order_id' => 'required'
+        ]);
         //$posts = Post::all();
         //return Post::where('title', 'Post Two')->get();
         //$posts = DB::select('SELECT * FROM posts');
         //$posts = Post::orderBy('title','desc')->take(1)->get();
         //$posts = Post::orderBy('title','desc')->get();
-
-        $borrows = Borrow::orderBy('id','desc')->paginate(15);
+        $order_id = $request->input('order_id');
+        $borrows = Borrow::where('order_id',$order_id)->orderBy('id','desc')->paginate(15);
         
         return view('/send')->with('borrows', $borrows);
     }

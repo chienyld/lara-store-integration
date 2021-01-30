@@ -24,6 +24,7 @@
             <ul class="nav navbar-nav">
                 <li>
                 <form name="form1" action="/search" method="post">
+                {!! csrf_field() !!}
                 <div class="searchdiv" media="screen and (min-width: 400px) and (max-width: 700px)">
                     <input class="searching" type="text" name="keyword" placeholder=" Search">
                     <a href='javascript:document.form1.submit()' class="search-btn" style="text-decoration: none;">
@@ -58,8 +59,7 @@
                             <!--<li><a href="/send/{{ Auth::user()->id }}">我的清單</a></li>-->
                             <li><a href="/cart">我的清單</a></li>
                             @if(Auth::user()->privilege=='sa_admin')
-                            <li><a href="/send">出貨狀況</a></li>
-                            <li><a href="/order">訂單狀況</a></li>
+                            <li><a href="/order">出貨管理</a></li>
                             <li><a href="/dashboard">品項管理</a></li>
                             <li><a href="/bulletin">公告管理</a></li>
                             <li><a href="/rules">借用規則</a></li>

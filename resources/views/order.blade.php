@@ -13,7 +13,6 @@
                         <table class="table table-striped">
                             <tr>
                                 <th>訂單</th>
-                                <th>編號</th>
                                 <th>會員</th>
                                 <th>金額</th>
                                 <th>狀態</th>
@@ -26,7 +25,6 @@
                                     {!! csrf_field() !!}
                                     <td>{{$order->order_id}}</td>
                                     <td>{{$order->user_name}}</td>
-                                    <td>{{$order->name}}</td>
                                     <td>{{$order->total}}</td>
                                     <td>
                                     <div class="row">
@@ -42,6 +40,18 @@
                                         @endif
                                     </div>
                                     </div>
+                                    </td>
+                                    <td>
+                                    <form name="form2" action="/send/lookup" method="post">
+                                    {!! csrf_field() !!}
+                                    <div class="searchdiv" media="screen and (min-width: 400px) and (max-width: 700px)">
+                                        <input type="hidden" name="order_id" value="{{$order->order_id}}">
+                                        <button type="submit" class="search-btn" style="border:none">
+                                        <i class="fas fa-search"></i>
+                                        </button>
+                                        </a>
+                                    </div>
+                                    </form>
                                     </td>
                                     
                                 </tr>

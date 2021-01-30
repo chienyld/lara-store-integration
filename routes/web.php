@@ -58,7 +58,8 @@ Route::delete('/cart/{id}','App\Http\Controllers\CartController@delete')->name('
 
 Route::post('/borrows','App\Http\Controllers\SendController@store')->middleware('verified','active');
 
-Route::get('/send','App\Http\Controllers\SendController@index')->middleware('verified');
+Route::post('/send/lookup','App\Http\Controllers\SendController@lookup')->middleware('verified','active','admin');
+Route::get('/send','App\Http\Controllers\SendController@index')->middleware('verified','active');
 Route::post('/send/{id}','App\Http\Controllers\SendController@verify')->middleware('verified','active');
 
 Route::get('/order','App\Http\Controllers\OrderController@index')->middleware('verified');

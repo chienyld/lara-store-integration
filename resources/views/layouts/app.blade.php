@@ -18,7 +18,7 @@
     <link href="{{ asset('css/bootstrap-grid.min.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app" style="font-family: sans-serif,'Roboto',Montserrat">
+    <div id="app" style="font-family: sans-serif,'Roboto',Montserrat;overflow-x:hidden">
         @include('inc.navbar')
         <div class="container">
             @include('inc.messages')

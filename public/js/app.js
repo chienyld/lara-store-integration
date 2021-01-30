@@ -2151,6 +2151,16 @@ __webpack_require__.r(__webpack_exports__);
             qty: item.quantity
           };
           arr.push(jsonObj);
+
+          _this.$http["delete"]('/cart/' + item.id, {
+            params: {
+              _token: _this.token
+            }
+          }).then(function (success) {
+            _this.loadItems();
+          }, function (error) {
+            console.log(error);
+          });
         }
 
         ;
