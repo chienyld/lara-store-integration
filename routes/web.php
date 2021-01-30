@@ -61,6 +61,8 @@ Route::post('/borrows','App\Http\Controllers\SendController@store')->middleware(
 Route::get('/send','App\Http\Controllers\SendController@index')->middleware('verified');
 Route::post('/send/{id}','App\Http\Controllers\SendController@verify')->middleware('verified','active');
 
+Route::get('/order','App\Http\Controllers\OrderController@index')->middleware('verified');
+
 Route::get('/account','App\Http\Controllers\AccountController@index')->middleware('verified','active','admin');
 Route::post('/account/edit','App\Http\Controllers\AccountController@edit')->middleware('verified','active','admin');
 

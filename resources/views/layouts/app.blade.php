@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-grid.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app" style="font-family: sans-serif,'Roboto',Montserrat">

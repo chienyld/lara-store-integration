@@ -4,7 +4,7 @@
 <div style="float:left"><i @click="decreaseValue()" class="fas fa-minus-circle fa-2x"></i></div>
 
 <div style="width:63%;float:left">
-  <input class="form-control" name="qty" type="number" v-model="amt" value="qty" style="border-radius:45px"/>
+  <input class="form-control" name="qty" type="number" v-model="amt" value="qty" style="border-radius:40px"/>
 </div>
 
 <div style="float:left"><i v-on:click="increaseValue()" class="fas fa-plus-circle fa-2x"></i></div>

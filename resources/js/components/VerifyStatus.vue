@@ -47,7 +47,7 @@
                 //console.log(_this.datastatus);
                 //console.log(_this.dataitem);
                 //console.log(_this.dataqty);
-                this.$http.post('/send/' + this.dataid ,{
+                this.$http.post('/order/' + this.dataid ,{
                     _token:_this.token,
                     id:_this.dataid,
                     item:_this.dataitem,

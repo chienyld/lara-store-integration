@@ -8,6 +8,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\Borrow;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Order;
 use DB;
 
 class SendController extends Controller
@@ -88,8 +89,16 @@ class SendController extends Controller
         $post = Post::find($borrow->borrow_id);
         $post->inventory = $post->inventory-$borrow->qty;
         $post->save();
-        }
 
+        
+        }
+        $order = new Order;
+        $order->order_id = $user_order_id;
+        $order->user_id = auth()->user()->id;
+        $order->user_name = auth()->user()->name; 
+        $order->total = array_sum($deposits);
+        $order->status = false;
+        $order->save();
         /*
         $this->validate($request, [
             'id' => 'required',

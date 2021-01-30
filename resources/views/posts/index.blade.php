@@ -16,14 +16,15 @@
     @endif
 
     <h2>項目</h2>
+    <div class="d-flex flex-wrap">
     @if(count($posts) > 0)    
         @foreach($posts as $post)
-            <div class="col-lg-4 col-sm-12">
-                <div class="fixed-well">
+            <div class="fixed-well col-lg-4 col-sm-12">
+                <div style="margin:25px">
                     <div class="col-lg-12 col-md-4 col-sm-4">
-                        <img style="width:100%;padding-left:30px;padding-right:30px" src="/storage/cover_images/{{$post->cover_image}}">
+                        <img style="width:100%;padding:30px" src="/storage/cover_images/{{$post->cover_image}}">
                     </div>
-                    <div class="col-lg-12 col-md-4 col-sm-4" style="padding-top: 20px">
+                    <div class="col-lg-12 col-md-6 col-sm-6" style="padding-top: 20px">
                         <div style="margin:10%">
                             <h2 style="font-size:25px"><a href="/posts/{{$post->id}}">{{$post->title}}</a></h2>
                             <h3 style="color:#53575b">${{$post->deposit}}</h3>
@@ -50,7 +51,6 @@
                         @endauth
                         </form>
                     </div>
-
                 </div>
             </div>
         @endforeach
@@ -58,6 +58,6 @@
     @else
         <p>No posts found</p>
     @endif
-    
+    </div>
 
 @endsection

@@ -47,7 +47,7 @@
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><div class="register-button" onclick="location.href='{{ route('register') }}';">Register</div></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -58,7 +58,8 @@
                             <!--<li><a href="/send/{{ Auth::user()->id }}">我的清單</a></li>-->
                             <li><a href="/cart">我的清單</a></li>
                             @if(Auth::user()->privilege=='sa_admin')
-                            <li><a href="/send">訂單狀況</a></li>
+                            <li><a href="/send">出貨狀況</a></li>
+                            <li><a href="/order">訂單狀況</a></li>
                             <li><a href="/dashboard">品項管理</a></li>
                             <li><a href="/bulletin">公告管理</a></li>
                             <li><a href="/rules">借用規則</a></li>

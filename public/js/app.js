@@ -2422,7 +2422,7 @@ __webpack_require__.r(__webpack_exports__);
       //console.log(_this.dataqty);
 
 
-      this.$http.post('/send/' + this.dataid, {
+      this.$http.post('/order/' + this.dataid, {
         _token: _this.token,
         id: _this.dataid,
         item: _this.dataitem,
@@ -38755,7 +38755,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            staticStyle: { "border-radius": "45px" },
+            staticStyle: { "border-radius": "40px" },
             attrs: { name: "qty", type: "number", value: "qty" },
             domProps: { value: _vm.amt },
             on: {
