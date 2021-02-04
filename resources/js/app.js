@@ -10,9 +10,14 @@ import Vue from 'vue';
 import http from 'axios'
 Vue.prototype.$http = http
 window.Vue = require('vue');*/
-import  VueResource  from 'vue-resource'
- 
+import  VueResource  from 'vue-resource';
+import VueSplide from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+//import '@splidejs/splide/dist/css/themes/splide-sea-green.min.css';
+//import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css';
+Vue.use( VueSplide );
 Vue.use(VueResource);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -30,6 +35,8 @@ Vue.component('verify-status', require('./components/VerifyStatus.vue').default)
 Vue.component('verify-status2', require('./components/VerifyStatus2.vue').default);
 Vue.component('user-type', require('./components/UserType.vue').default);
 Vue.component('cart', require('./components/Cart.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -39,6 +46,7 @@ Vue.component('cart', require('./components/Cart.vue').default);
 
 const app = new Vue({
     el: '#app',
+
 });
 
 

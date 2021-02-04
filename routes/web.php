@@ -38,6 +38,7 @@ Route::post('/search', 'App\Http\Controllers\PostsController@search');
 
 Route::resource('posts', 'App\Http\Controllers\PostsController');
 Route::resource('borrows', 'App\Http\Controllers\SendController');
+Route::resource('carousel', 'App\Http\Controllers\CarouselController');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->middleware('verified','active','admin');
 
@@ -69,6 +70,11 @@ Route::post('/account/edit','App\Http\Controllers\AccountController@edit')->midd
 
 Route::get('/bulletin','App\Http\Controllers\BulletinController@index')->middleware('verified','active','admin');
 Route::post('/bulletin/p','App\Http\Controllers\BulletinController@edit')->middleware('verified','active','admin');
+
+Route::get('/carousel','App\Http\Controllers\CarouselController@index')->middleware('verified','active','admin');
+Route::post('/carousel/p','App\Http\Controllers\CarouselController@edit')->middleware('verified','active','admin');
+Route::post('/carousel/{id}','App\Http\Controllers\CarouselController@update')->middleware('verified','active','admin');
+Route::delete('/carousel/d/{id}','App\Http\Controllers\CarouselController@destroy')->middleware('verified','active','admin');
 
 Route::get('/rules','App\Http\Controllers\RulesController@page')->middleware('verified','active','admin');
 Route::post('/rules/p','App\Http\Controllers\RulesController@edit')->middleware('verified','active','admin');

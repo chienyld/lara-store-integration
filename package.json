@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@splidejs/vue-splide": "^0.3.5",
         "ismobilejs": "^1.1.1",
         "vue-date-pick": "^1.4.1",
         "vue-resource": "^1.5.1"

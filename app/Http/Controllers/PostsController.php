@@ -8,6 +8,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\Post;
 use App\Models\Borrow;
 use App\Models\Bulletin;
+use App\Models\Carousel;
 use DB;
 
 class PostsController extends Controller
@@ -35,24 +36,28 @@ class PostsController extends Controller
         //$posts = Post::orderBy('title','desc')->take(1)->get();
         //$posts = Post::orderBy('title','desc')->get();
         $bulletin = Bulletin::find(1);
+        $carousel = Carousel::orderBy('created_at','desc')->get();
         $posts = Post::orderBy('created_at','desc')->paginate(10);
         
-        return view('posts.index')->with('posts', $posts)->with('bulletin', $bulletin);
+        return view('posts.index')->with('posts', $posts)->with('carousel', $carousel)->with('bulletin', $bulletin);
     }
     public function type0(){
         $bulletin = Bulletin::find(1);
+        $carousel = 0;
         $posts0 = Post::orderBy('created_at','desc')->where('type', '0')->paginate(10);
-        return view('posts.index')->with('posts', $posts0)->with('bulletin', $bulletin);
+        return view('posts.index')->with('posts', $posts0)->with('bulletin', $bulletin)->with('carousel', $carousel);
     }
     public function type1(){
         $bulletin = Bulletin::find(1);
+        $carousel = 0;
         $posts1 = Post::orderBy('created_at','desc')->where('type', '1')->paginate(10);
-        return view('posts.index')->with('posts', $posts1)->with('bulletin', $bulletin);
+        return view('posts.index')->with('posts', $posts1)->with('bulletin', $bulletin)->with('carousel', $carousel);
     }
     public function type2(){
         $bulletin = Bulletin::find(1);
+        $carousel = 0;
         $posts2 = Post::orderBy('created_at','desc')->where('type', '2')->paginate(10);
-        return view('posts.index')->with('posts', $posts2)->with('bulletin', $bulletin);
+        return view('posts.index')->with('posts', $posts2)->with('bulletin', $bulletin)->with('carousel', $carousel);
     }
     public function search(Request $request){
         $this->validate($request, [
@@ -60,8 +65,9 @@ class PostsController extends Controller
         ]);
         $keyword = $request->input('keyword');
         $bulletin = Bulletin::find(1);
+        $carousel = 0;
         $search = Post::orderBy('created_at','desc')->where('title', 'like', '%' . $keyword . '%' )->paginate(10);
-        return view('posts.index')->with('posts', $search)->with('bulletin', $bulletin);
+        return view('posts.index')->with('posts', $search)->with('bulletin', $bulletin)->with('carousel', $carousel);
     }
 
     /**
@@ -103,11 +109,14 @@ class PostsController extends Controller
             $fileNameToStore= $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
-		
+		/*$image=Image::make($request->file('cover_image'));
+            $image->resize(300,300);
+            $path = $image->save('storage/cover_images'. $fileNameToStore);
+            */
 	    // make thumbnails
 	    $thumbStore = 'thumb.'.$filename.'_'.time().'.'.$extension;
             $thumb = Image::make($request->file('cover_image')->getRealPath());
-            $thumb->resize(80, 80);
+            $thumb->resize(300, 300);
             $thumb->save('storage/cover_images/'.$thumbStore);
 		
         } else {
@@ -201,7 +210,7 @@ class PostsController extends Controller
 	   //Make thumbnails
 	    $thumbStore = 'thumb.'.$filename.'_'.time().'.'.$extension;
             $thumb = Image::make($request->file('cover_image')->getRealPath());
-            $thumb->resize(80, 80);
+            $thumb->resize(300, 300);
             $thumb->save('storage/cover_images/'.$thumbStore);
 		
         }

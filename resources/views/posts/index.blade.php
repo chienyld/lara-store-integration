@@ -1,10 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="container" style="height:20%;overflow:hidden">
+<splide>
+    @if($carousel) 
+        @foreach($carousel as $card)
+    <splide-slide>
+    <div style="border-radius:10px;overflow:hidden">
+        <img style="width:100%" src="/storage/card_image/{{$card->card_image}}">
+    </div>
+    </splide-slide>
+        @endforeach
+    @endif
+</splide>
+</div>
+<br>
+
     @auth
     @if(! Auth::user()->active)
         <div class="well" style="background-color: #ff7a7a;color:#333333">
-            <h4>此帳號可能已被停權，請聯絡學生會。</h4>
+            <h4>此帳號可能已被停權。</h4>
         </div>  
     @endif
     @endauth 
@@ -22,7 +38,7 @@
             <div class="fixed-well col-lg-4 col-sm-12">
                 <div style="margin:25px">
                     <div class="col-lg-12 col-md-4 col-sm-4">
-                        <img style="width:100%;padding:30px" src="/storage/cover_images/{{$post->cover_image}}">
+                        <img style="width:100%;padding:30px" src="/storage/cover_images/thumb.{{$post->cover_image}}">
                     </div>
                     <div class="col-lg-12 col-md-6 col-sm-6" style="padding-top: 20px">
                         <div style="margin:10%">
@@ -59,5 +75,6 @@
         <p>No posts found</p>
     @endif
     </div>
+
 
 @endsection
