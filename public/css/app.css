@@ -172,6 +172,17 @@ html {
 
 body {
   margin: 0;
+  overflow-x:hidden;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+.scrolln::-webkit-scrollbar {
+  display: none;
+}
+.scrolln{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
 }
 
 article,
@@ -7411,6 +7422,8 @@ button.list-group-item-danger.active:focus {
 .fixed-well:hover{
   transform: scale(1.01);
   box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  scrollbar-width: none;
 }
 .well {
   min-height: 20px;

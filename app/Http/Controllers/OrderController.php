@@ -34,23 +34,28 @@ class OrderController extends Controller
         
         return view('/order')->with('orders', $orders);
     }
+    public function myorder()
+    {
+        $user = auth()->user()->id;
+        $orders = Order::where('user_id',$user)->orderBy('id','desc')->paginate(15);
+        return view('/order')->with('orders', $orders);
+        //return view('/send')->with('borrows', $borrows);
+    }
     
     public function verify(Request $request)
     {
         $id=$request->input('id');
-        $item=$request->input('item');
         $unstatus=$request->input('status');
-        $qty=$request->input('qty');
         $status=!$unstatus;
         $order = Order::find($id);
-        $borrow->status = $status;
+        $order->status = $status;
         
-        $borrow->save();
+        $order->save();
         /*return response()->json([
             'status'=> $status
-          ], 200);*/
-        return redirect('order');
-   }
+          ], 200);*/    
+        return redirect()->route('/order');
+}
 
     
 }

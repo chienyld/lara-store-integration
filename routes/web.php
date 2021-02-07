@@ -39,6 +39,7 @@ Route::post('/search', 'App\Http\Controllers\PostsController@search');
 Route::resource('posts', 'App\Http\Controllers\PostsController');
 Route::resource('borrows', 'App\Http\Controllers\SendController');
 Route::resource('carousel', 'App\Http\Controllers\CarouselController');
+Route::resource('order', 'App\Http\Controllers\OrderController');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->middleware('verified','active','admin');
 
@@ -60,10 +61,13 @@ Route::delete('/cart/{id}','App\Http\Controllers\CartController@delete')->name('
 Route::post('/borrows','App\Http\Controllers\SendController@store')->middleware('verified','active');
 
 Route::post('/send/lookup','App\Http\Controllers\SendController@lookup')->middleware('verified','active','admin');
-Route::get('/send','App\Http\Controllers\SendController@index')->middleware('verified','active');
+Route::get('/send','App\Http\Controllers\OrderController@index')->middleware('verified','active');
 Route::post('/send/{id}','App\Http\Controllers\SendController@verify')->middleware('verified','active');
 
-Route::get('/order','App\Http\Controllers\OrderController@index')->middleware('verified');
+//Route::get('/order','App\Http\Controllers\OrderController@index')->middleware('verified');
+Route::post('/order/{id}','App\Http\Controllers\OrderController@verify')->middleware('verified','active','admin');
+Route::name('/order')->get('/order', 'App\Http\Controllers\OrderController@index')->middleware('verified','active','admin');
+Route::name('/myorder')->get('/myorder', 'App\Http\Controllers\OrderController@myorder')->middleware('verified','active','admin');
 
 Route::get('/account','App\Http\Controllers\AccountController@index')->middleware('verified','active','admin');
 Route::post('/account/edit','App\Http\Controllers\AccountController@edit')->middleware('verified','active','admin');

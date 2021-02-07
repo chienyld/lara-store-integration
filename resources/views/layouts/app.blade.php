@@ -17,10 +17,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-grid.min.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="overflow-x: hidden">
     <div id="app" style="font-family: sans-serif,'Roboto',Montserrat;overflow-x:hidden">
         @include('inc.navbar')
-        <div class="container">
+        <div class="container" style="overflow-x: hidden">
             @include('inc.messages')
             @yield('content')
         </div>

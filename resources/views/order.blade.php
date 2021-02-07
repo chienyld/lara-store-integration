@@ -33,10 +33,10 @@
                                     </div>
                                     <div class="col-lg-6">
                                         @if(Auth::user()->privilege=='sa_admin')
-                                        <verify-status token="{{ csrf_token() }}" datastatus="{{ $order->status }}" dataid="{{ $order->id }}" dataitem="{{ $order->order_id }}" dataqty="{{ $order->total }}"></verify-status>
+                                        <verify-status token="{{ csrf_token() }}" datastatus="{{ $order->status }}" dataid="{{ $order->id }}"></verify-status>
                                         @else
-                                        <div v-if="{{$order->status}}">器材已完成歸還，感謝使用本系統</div>
-                                        <div v-else>器材借用申請成功，請於填寫日期時段至學務處領取器材</div>
+                                        <div v-if="{{$order->status}}">商品已出貨，請耐心等候</div>
+                                        <div v-else>頂單準備中，請耐心等候</div>
                                         @endif
                                     </div>
                                     </div>

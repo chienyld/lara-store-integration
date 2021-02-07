@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="container" style="height:20%;overflow:hidden">
-<splide>
     @if($carousel) 
-        @foreach($carousel as $card)
-    <splide-slide>
-    <div style="border-radius:10px;overflow:hidden">
-        <img style="width:100%" src="/storage/card_image/{{$card->card_image}}">
-    </div>
-    </splide-slide>
-        @endforeach
+    <splide>
+            @foreach($carousel as $card)
+        <splide-slide>
+        <div style="border-radius:10px;overflow:hidden">
+            <img style="width:100%" src="/storage/card_image/{{$card->card_image}}">
+        </div>
+        </splide-slide>
+            @endforeach
+    </splide>
     @endif
-</splide>
+<div class="container" style="height:20%;overflow:hidden">
+
 </div>
 <br>
 
@@ -32,16 +32,17 @@
     @endif
 
     <h2>項目</h2>
-    <div class="d-flex flex-wrap">
+    <div class="scrolln d-flex flex-wrap" style="overflow-x: hidden">
     @if(count($posts) > 0)    
         @foreach($posts as $post)
-            <div class="fixed-well col-lg-4 col-sm-12">
-                <div style="margin:25px">
-                    <div class="col-lg-12 col-md-4 col-sm-4">
-                        <img style="width:100%;padding:30px" src="/storage/cover_images/thumb.{{$post->cover_image}}">
+        
+            <div class="fixed-well col-lg-4 col-sm-12" style="overflow: hidden;scrollbar-width: none;">
+                <div style="margin:25px;overflow: hidden">
+                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-4">
+                        <img style="width:100%;padding:5px;padding-top:5vh" src="/storage/cover_images/thumb.{{$post->cover_image}}">
                     </div>
-                    <div class="col-lg-12 col-md-6 col-sm-6" style="padding-top: 20px">
-                        <div style="margin:10%">
+                    <div class="col-lg-12 col-md-8 col-sm-8 col-xs-8">
+                        <div style="padding:1vh">
                             <h2 style="font-size:25px"><a href="/posts/{{$post->id}}">{{$post->title}}</a></h2>
                             <h3 style="color:#53575b">${{$post->deposit}}</h3>
                             @if($post->inventory)

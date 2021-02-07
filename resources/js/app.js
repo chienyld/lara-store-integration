@@ -35,6 +35,7 @@ Vue.component('verify-status', require('./components/VerifyStatus.vue').default)
 Vue.component('verify-status2', require('./components/VerifyStatus2.vue').default);
 Vue.component('user-type', require('./components/UserType.vue').default);
 Vue.component('cart', require('./components/Cart.vue').default);
+Vue.component('sliding', require('./components/sliding.vue').default);
 
 
 /**

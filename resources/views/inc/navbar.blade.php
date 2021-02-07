@@ -58,6 +58,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <!--<li><a href="/send/{{ Auth::user()->id }}">我的清單</a></li>-->
                             <li><a href="/cart">我的清單</a></li>
+                            <li><a href="/myorder">我的訂單</a></li>
                             @if(Auth::user()->privilege=='sa_admin')
                             <li><a href="/order">出貨管理</a></li>
                             <li><a href="/dashboard">品項管理</a></li>

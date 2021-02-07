@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        props: ['token','datastatus', 'dataid' , 'dataitem','dataqty'],
+        props: ['token','datastatus', 'dataid'],
         mounted() {
             /*console.log(this.datastatus);
             console.log(this.dataid);
@@ -17,9 +17,7 @@
         data: function () {
             return {      
                 status: this.datastatus,
-                id: this.dataid,
-                item:this.dataitem,
-                qty:this.dataqty
+                id: this.dataid
             }
         },
         computed: {
@@ -43,22 +41,12 @@
             checkstatus() {
                 //var _token = '<?php echo csrf_token() ?>';
                 var _this=this;
-                //console.log(this.id);
-                //console.log(_this.datastatus);
-                //console.log(_this.dataitem);
-                //console.log(_this.dataqty);
                 this.$http.post('/order/' + this.dataid ,{
                     _token:_this.token,
                     id:_this.dataid,
-                    item:_this.dataitem,
-                    status:_this.datastatus,
-                    qty:_this.dataqty
+                    status:_this.datastatus
                 }).then(function(success) {
                     window.location = "/send";
-                    console.log(_this.dataqty);
-                    //this.status = JSON.parse(status);
-                    console.log(_this.status);
-                    //console.log(response.data);
                         }, function(error) {
                             console.log(error);
                         });/*
