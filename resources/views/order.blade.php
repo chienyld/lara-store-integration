@@ -36,7 +36,7 @@
                                         <verify-status token="{{ csrf_token() }}" datastatus="{{ $order->status }}" dataid="{{ $order->id }}"></verify-status>
                                         @else
                                         <div v-if="{{$order->status}}">商品已出貨，請耐心等候</div>
-                                        <div v-else>頂單準備中，請耐心等候</div>
+                                        <div v-else>訂單準備中，請耐心等候</div>
                                         @endif
                                     </div>
                                     </div>

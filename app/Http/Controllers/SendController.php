@@ -166,14 +166,7 @@ class SendController extends Controller
         $status=!$unstatus;
         $borrow = Borrow::find($id);
         $post = Post::find($item);
-        //$borrow = Borrow::where('user_id', '=', $id, 'and', 'name', '=', $name)->get();
         $borrow->status = $status;
-        if($status){
-        $post->inventory = $post->inventory+$qty;
-        }
-        else{
-        $post->inventory = $post->inventory-$qty;    
-        }
         $borrow->save();
         $post->save();
         /*return response()->json([

@@ -20,7 +20,7 @@
 <body style="overflow-x: hidden">
     <div id="app" style="font-family: sans-serif,'Roboto',Montserrat;overflow-x:hidden">
         @include('inc.navbar')
-        <div class="container" style="overflow-x: hidden">
+        <div class="container" style="overflow-x: hidden;margin-top:22px">
             @include('inc.messages')
             @yield('content')
         </div>

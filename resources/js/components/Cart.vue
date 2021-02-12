@@ -1,7 +1,7 @@
 <template>
 <div class="container">
             <div class="col-lg-6 col-lg-offset-3">
-                <h2>我的清單</h2>
+                <h3>我的購物清單</h3>
                 <table class="table">
                     <thead>
                     <tr>

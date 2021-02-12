@@ -1,5 +1,5 @@
 <!--/* Copyright © 2020 Chien-Yu Lin. All rights reserved.*/-->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="margin-bottom:0">
     <div class="container">
         <div class="navbar-header">
 
@@ -47,9 +47,18 @@
             
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><div class="register-button" onclick="location.href='{{ route('register') }}';">Register</div></li>
+                    <li><a href="{{ route('login') }}">登入</a></li>
+                    <li><div class="register-button" onclick="location.href='{{ route('register') }}';">加入會員</div></li>
                 @else
+                    <li>
+                    <div style="margin:auto">
+                    <!--<div style="position:absolute;background-color:red;border-radius:50%;height:13px;width:13px;left:30px;top:12px;color:#fff;text-align:center"><span  style="font-size:2px">1</span></div>-->
+                    <div>
+                        <a href="/cart">
+                        <i class="fas fa-shopping-cart" style="color:#deedfb;margin:18px"></i></a>
+                    </div>
+                    </div>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
@@ -63,9 +72,9 @@
                             <li><a href="/order">出貨管理</a></li>
                             <li><a href="/dashboard">品項管理</a></li>
                             <li><a href="/bulletin">公告管理</a></li>
-                            <li><a href="/rules">借用規則</a></li>
+                            <li><a href="/rules">關於我們</a></li>
                             <li><a href="/account">帳戶管理</a></li>
-                            <li><a href="/carousel">Card</a></li>
+                            <li><a href="/carousel">輪播卡片</a></li>
                             
                             @endif
                             <li>
@@ -81,6 +90,7 @@
                             </li>
                         </ul>
                     </li>
+                    
                 @endif
             </ul>
         </div>

@@ -27,7 +27,7 @@ Route::get('/', function () {
 //Auth::routes();
 Auth::routes(['verify' => true]);
 //Route::get('/home', 'HomeController@index')->middleware('verified');
-Route::get('/', 'App\Http\Controllers\PostsController@index');
+Route::get('/', 'App\Http\Controllers\HomeController@index');
 Route::get('/about', 'App\Http\Controllers\RulesController@index');
 Route::get('/type0', 'App\Http\Controllers\PostsController@type0');
 Route::get('/type1', 'App\Http\Controllers\PostsController@type1');
@@ -60,14 +60,14 @@ Route::delete('/cart/{id}','App\Http\Controllers\CartController@delete')->name('
 
 Route::post('/borrows','App\Http\Controllers\SendController@store')->middleware('verified','active');
 
-Route::post('/send/lookup','App\Http\Controllers\SendController@lookup')->middleware('verified','active','admin');
+Route::post('/send/lookup','App\Http\Controllers\SendController@lookup')->middleware('verified','active');
 Route::get('/send','App\Http\Controllers\OrderController@index')->middleware('verified','active');
 Route::post('/send/{id}','App\Http\Controllers\SendController@verify')->middleware('verified','active');
 
 //Route::get('/order','App\Http\Controllers\OrderController@index')->middleware('verified');
 Route::post('/order/{id}','App\Http\Controllers\OrderController@verify')->middleware('verified','active','admin');
 Route::name('/order')->get('/order', 'App\Http\Controllers\OrderController@index')->middleware('verified','active','admin');
-Route::name('/myorder')->get('/myorder', 'App\Http\Controllers\OrderController@myorder')->middleware('verified','active','admin');
+Route::name('/myorder')->get('/myorder', 'App\Http\Controllers\OrderController@myorder')->middleware('verified','active');
 
 Route::get('/account','App\Http\Controllers\AccountController@index')->middleware('verified','active','admin');
 Route::post('/account/edit','App\Http\Controllers\AccountController@edit')->middleware('verified','active','admin');

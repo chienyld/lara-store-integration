@@ -45356,7 +45356,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "col-lg-6 col-lg-offset-3" }, [
-      _c("h2", [_vm._v("我的清單")]),
+      _c("h3", [_vm._v("我的購物清單")]),
       _vm._v(" "),
       _c("table", { staticClass: "table" }, [
         _vm._m(0),

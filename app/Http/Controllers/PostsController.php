@@ -20,7 +20,7 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','type0','type1','type2', 'show']]);
+        $this->middleware('auth', ['except' => ['index','type0','type1','type2', 'show','search']]);
     }
 
     /**
