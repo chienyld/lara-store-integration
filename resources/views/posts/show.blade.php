@@ -10,13 +10,13 @@
         </div>
         
         <div class="showboard col-lg-8 col-md-12">
-            <div style="padding:20px;margin-top:15px">  
-                <div><h1>{{$post->title}}</h1></div><br><br>                 
-                <div style="font-size:1.1em;color:#0f4c81;right:1px">
-                    金額 ${!!$post->deposit!!}
+            <div style="padding:20px;margin-top:10px">  
+                <div><h1>{{$post->title}}</h1></div><br>                
+                <div style="font-size:1em;color:#0f4c81;right:1px">
+                    價格 ${!!$post->deposit!!}
                 </div>
-                <div style="font-size:1em;color:#3f5d91">
-                    剩餘 <b> {!!$post->inventory!!} </b> 個可借用
+                <div style="font-size:0.8em;color:#ABABAB">
+                    剩餘 <b> {!!$post->inventory!!} </b> 
                 </div>
                 <div style="font-size:0.8em" style="min-height:80px;word-wrap: break-word;">
                     {!!$post->body!!}

@@ -38,7 +38,13 @@
                             @endforeach
                         </table>
                           
-                        <h2>總金額 : {{$sum}}</h2>
+                        <h4>小計 : {{$sum}}</h4>
+                        @if($order->shipping==0)
+                        <h4>運費 : 0</h4>
+                        @else
+                        <h4>運費 : 60</h4>
+                        @endif
+                        <h3>總金額 : {{$order->total}}</h3>
                     @else
                         <p>You have no borrows</p>
                     @endif

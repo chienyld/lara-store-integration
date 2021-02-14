@@ -19,6 +19,9 @@ class CreateOrderTable extends Migration
             $table->integer('user_id');
             $table->string('user_name');
             $table->bigInteger('total');
+            $table->integer('payment');
+            $table->integer('shipping');
+            $table->integer('address');
             $table->integer('status');
             $table->timestamps();
 

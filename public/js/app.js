@@ -8236,10 +8236,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['token'],
   data: function data() {
     return {
+      shipping: '0',
+      address: '',
       details: {
         sub_total: 0,
         total: 0,
@@ -8355,6 +8370,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$http.post('/borrows', {
           _token: _this.token,
+          shipping: _this.shipping,
+          address: _this.address,
           id: uid,
           name: uname,
           deposit: uprice,
@@ -45040,8 +45057,8 @@ __webpack_require__.r(__webpack_exports__);
 				  pauseOnHover: false,
           		  arrows      : 'slider',
 				  padding: {
-						right: '10vh',
-						left : '10vh',
+						right: '6vh',
+						left : '6vh',
 					},
 				} ),
 			},
@@ -45395,38 +45412,121 @@ var render = function() {
       _vm._v(" "),
       _c("table", { staticClass: "table" }, [
         _c("tr", [
-          _c("td", [_vm._v("品項數:")]),
+          _c("td", [_vm._v("種類:")]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(_vm.itemCount))])
         ]),
         _vm._v(" "),
         _c("tr", [
-          _c("td", [_vm._v("總數量:")]),
+          _c("td", [_vm._v("數量:")]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(_vm.details.total_quantity))])
         ]),
         _vm._v(" "),
         _c("tr", [
+          _c("td", [_vm._v("小計:")]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [_vm._v("運費:")]),
+          _vm._v(" "),
+          _vm.shipping == 0
+            ? _c("td", [_vm._v(_vm._s("$" + 0) + " ")])
+            : _c("td", [_vm._v(_vm._s("$" + 60) + " ")])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
           _c("td", [_vm._v("總金額:")]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s("$" + _vm.details.total.toFixed(2)) + " ")])
+          _vm.shipping == 0
+            ? _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
+            : _c("td", [
+                _vm._v("$" + _vm._s(parseInt(_vm.details.total) + 60) + " ")
+              ])
         ])
       ]),
       _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.shipping,
+            expression: "shipping"
+          }
+        ],
+        attrs: { type: "radio", id: "store", value: "0" },
+        domProps: { checked: _vm._q(_vm.shipping, "0") },
+        on: {
+          change: function($event) {
+            _vm.shipping = "0"
+          }
+        }
+      }),
+      _c("label", { attrs: { for: "store" } }, [_vm._v("   門市自取")]),
+      _vm._v("     \n                "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.shipping,
+            expression: "shipping"
+          }
+        ],
+        attrs: { type: "radio", id: "ship", value: "1" },
+        domProps: { checked: _vm._q(_vm.shipping, "1") },
+        on: {
+          change: function($event) {
+            _vm.shipping = "1"
+          }
+        }
+      }),
+      _c("label", { attrs: { for: "ship" } }, [_vm._v("   宅配寄送")]),
+      _vm._v(" "),
+      _vm.shipping == 1
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.address,
+                expression: "address"
+              }
+            ],
+            staticClass: "form-control",
+            staticStyle: { "border-radius": "8px" },
+            attrs: { placeholder: "地址" },
+            domProps: { value: _vm.address },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.address = $event.target.value
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.sendItem()
-            }
-          }
-        },
-        [_vm._v("結帳")]
-      )
+      _vm.shipping == 0 || _vm.address
+        ? _c(
+            "button",
+            {
+              staticClass: "btn-primary",
+              on: {
+                click: function($event) {
+                  return _vm.sendItem()
+                }
+              }
+            },
+            [_vm._v("結帳")]
+          )
+        : _vm._e()
     ])
   ])
 }

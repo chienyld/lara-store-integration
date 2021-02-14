@@ -26,18 +26,18 @@
                 <form name="form1" action="/search" method="post">
                 {!! csrf_field() !!}
                 <div class="searchdiv" media="screen and (min-width: 400px) and (max-width: 700px)">
-                    <input class="searching" type="text" name="keyword" placeholder=" Search">
+                &nbsp<input class="searching" type="text" name="keyword" placeholder=" Search">
                     <a href='javascript:document.form1.submit()' class="search-btn" style="text-decoration: none;">
                     <i class="fas fa-search"></i>
                     </a>
                 </div>
                 </form>
                 </li>
-                <li><a href="/posts">首頁</a></li>
-                <li><a href="/type0">器具</a></li>
-                <li><a href="/type1">飲品</a></li>   
-                <li><a href="/type2">咖啡豆</a></li>
-                <li><a href="/about">關於我們</a></li>
+                <li><a href="/posts">&nbsp首頁</a></li>
+                <li><a href="/type0">&nbsp器具</a></li>
+                <li><a href="/type1">&nbsp飲品</a></li>   
+                <li><a href="/type2">&nbsp咖啡豆</a></li>
+                <li><a href="/about">&nbsp關於我們</a></li>
               
             </ul>
             
@@ -47,7 +47,7 @@
             
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">登入</a></li>
+                    <li><a href="{{ route('login') }}">&nbsp登入</a></li>
                     <li><div class="register-button" onclick="location.href='{{ route('register') }}';">加入會員</div></li>
                 @else
                     <li>
@@ -55,13 +55,13 @@
                     <!--<div style="position:absolute;background-color:red;border-radius:50%;height:13px;width:13px;left:30px;top:12px;color:#fff;text-align:center"><span  style="font-size:2px">1</span></div>-->
                     <div>
                         <a href="/cart">
-                        <i class="fas fa-shopping-cart" style="color:#deedfb;margin:18px"></i></a>
+                        &nbsp<i class="fas fa-shopping-cart" style="color:#deedfb;margin:18px"></i></a>
                     </div>
                     </div>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                        &nbsp{{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
@@ -81,7 +81,7 @@
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">
-                                    Logout
+                                    登出
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

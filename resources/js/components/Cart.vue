@@ -26,22 +26,35 @@
                 </table>
                 <table class="table">
                     <tr>
-                        <td>品項數:</td>
+                        <td>種類:</td>
                         <td>{{itemCount}}</td>
                     </tr>
                     <tr>
-                        <td>總數量:</td>
+                        <td>數量:</td>
                         <td>{{ details.total_quantity }}</td>
                     </tr>
                     <tr>
+                        <td>小計:</td>
+                        <td>{{ '$' + details.total }} </td>
+                    </tr>
+                    <tr>
+                        <td>運費:</td>
+                        <td v-if="shipping==0">{{ '$' + 0 }} </td>
+                        <td v-else>{{ '$' + 60 }} </td>
+                    </tr>
+                    <tr>
                         <td>總金額:</td>
-                        <td>{{ '$' + details.total.toFixed(2) }} </td>
+                        <td v-if="shipping==0">{{ '$' + details.total }} </td>
+                        <td v-else>${{ parseInt(details.total)+60 }} </td>
                     </tr>
                 </table>
+                <input type="radio" id="store" v-model="shipping" value="0"><label for="store"> &nbsp 門市自取</label>&nbsp&nbsp&nbsp&nbsp&nbsp
+                <input type="radio" id="ship" v-model="shipping" value="1"><label for="ship"> &nbsp 宅配寄送</label>
+                <input v-if="shipping==1" v-model="address" placeholder="地址" class="form-control" style="border-radius:8px">
                 <br>
                 
                 
-                <button v-on:click="sendItem()" class="btn-primary">結帳</button>
+                <button v-if="shipping==0 || address " v-on:click="sendItem()" class="btn-primary">結帳</button>
         </div>
     </div>
 
@@ -51,6 +64,8 @@ export default {
     props: ['token'],
     data: function (){
         return {
+            shipping:'0',
+            address:'',
             details: {
                 sub_total: 0,
                 total: 0,
@@ -152,6 +167,8 @@ export default {
                 });
             _this.$http.post('/borrows',{
                 _token:_this.token,
+                shipping:_this.shipping,
+                address:_this.address,
                 id:uid,
                 name:uname,
                 deposit:uprice,
