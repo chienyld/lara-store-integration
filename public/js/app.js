@@ -45299,8 +45299,8 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            staticStyle: { "border-radius": "40px" },
-            attrs: { name: "qty", type: "number", value: "qty" },
+            staticStyle: { "border-radius": "35px" },
+            attrs: { id: "qty", name: "qty", type: "number", value: "qty" },
             domProps: { value: _vm.amt },
             on: {
               input: function($event) {
@@ -45336,11 +45336,11 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticStyle: { width: "80%", margin: "15px" } }, [
+        _c("div", { staticStyle: { width: "100%", margin: "10px" } }, [
           this.amt > 0
             ? _c("input", {
                 staticClass: "btn-primary col-10 offset-1",
-                staticStyle: { "border-radius": "50px" },
+                staticStyle: { "border-radius": "35px" },
                 attrs: { type: "submit", value: "加入清單" }
               })
             : _vm._e()

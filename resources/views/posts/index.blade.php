@@ -36,21 +36,20 @@
     @if(count($posts) > 0)    
         @foreach($posts as $post)
         
-            <div class="fixed-well col-lg-4 col-sm-12" style="overflow: hidden;scrollbar-width: none;">
-                <div style="margin:25px;overflow: hidden">
-                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-4">
-                        <img style="width:100%;padding:5px;padding-top:5vh" src="/storage/cover_images/thumb.{{$post->cover_image}}">
+            <div class="fixed-well col-lg-4 col-sm-6 col-xs-6" style="overflow: hidden;scrollbar-width: none;padding:0">
+                <div style="margin:0;overflow: hidden">
+                    <div class="col-12" style="padding:0">
+                        <img style="width:100%" src="/storage/cover_images/thumb.{{$post->cover_image}}">
                     </div>
-                    <div class="col-lg-12 col-md-8 col-sm-8 col-xs-8">
+                    <div class="col-12">
                         <div style="padding:1vh">
-                            <h2 style="font-size:25px"><a href="/posts/{{$post->id}}">{{$post->title}}</a></h2>
-                            <h3 style="color:#53575b">${{$post->deposit}}</h3>
+                            <h2 id="item"><a href="/posts/{{$post->id}}">{{$post->title}}</a></h2>
+                            <h3 id="inventory">${{$post->deposit}}</h3>
                             @if($post->inventory)
-                            <h2 style="font-size:20px">剩餘數量 <b> {!!$post->inventory!!} </b> </h2>
+                            <h3 id="inventory">剩餘數量 <b> {!!$post->inventory!!} </b> </h3>
                             @else
-                            <h4 style="color:#df4c4c;font-size:25px">全數外借中</h4>
+                            <h4 style="color:#df4c4c;font-size:1rem">缺貨中</h4>
                             @endif
-                            <div style="height:15px"></div>
                         </div>
                         <form action="{{ url('/cart') }}" method="POST">
                         
@@ -62,8 +61,11 @@
                         <input type="hidden" name="id" value="{{$post->id}}">
                         <input type="hidden" name="name" value="{{$post->title}}">
                         <input type="hidden" name="price" value="{{$post->deposit}}">
-                        @if($post->inventory)
+                        @if($post->inventory && $post->type!=1)
                         <amount-input min="1" max="{{$post->inventory}}"></amount-input>
+                        @endif
+                        @if($post->type==1)
+                        <div style="height:10vh"></div>
                         @endif
                         @endauth
                         </form>

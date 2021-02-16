@@ -15,9 +15,11 @@
                 <div style="font-size:1em;color:#0f4c81;right:1px">
                     價格 ${!!$post->deposit!!}
                 </div>
+                @if($post->type!=1)
                 <div style="font-size:0.8em;color:#ABABAB">
                     剩餘 <b> {!!$post->inventory!!} </b> 
                 </div>
+                @endif
                 <div style="font-size:0.8em" style="min-height:80px;word-wrap: break-word;">
                     {!!$post->body!!}
                 </div>
@@ -34,7 +36,9 @@
                 <input type="hidden" name="name" value="{{$post->title}}">
                 <input type="hidden" name="price" value="{{$post->deposit}}">
                 <div class="row">
+                @if($post->type!=1)
                 <amount-input min="1" max="{{$post->inventory}}"></amount-input>
+                @endif
                 </div>
                 </form>
     </div>

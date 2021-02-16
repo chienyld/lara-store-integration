@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
         ]);
         User::truncate();
         User::create([
-            'name' => 'chien',
+            'name' => 'chiefe',
             'privilege' => 'sa_admin',
-            'email' => 'chien@chienyld.github.io',
-            'email_verified_at' => '2020-11-08 00:30:00',
+            'email' => 'chiefecoffee@gmail.com',
+            'email_verified_at' => '2020-11-09 00:30:00',
             'password' => Hash::make('00000000'),
         ]);
     }

@@ -13,7 +13,6 @@
                         <table class="table table-striped">
                             <tr>
                                 <th>訂單</th>
-                                <th>會員</th>
                                 <th>金額</th>
                                 <th>狀態</th>
                                 <th></th>
@@ -24,7 +23,7 @@
                                 <tr>
                                     {!! csrf_field() !!}
                                     <td>{{$order->order_id}}</td>
-                                    <td>{{$order->user_name}}</td>
+                                    <!--<td>{{$order->user_name}}</td>-->
                                     <td>{{$order->total}}</td>
                                     <td>
                                     <div class="row">

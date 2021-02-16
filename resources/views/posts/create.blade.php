@@ -28,9 +28,11 @@
             {{Form::label('body', 'Body')}}
             {{Form::textarea('body', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Body Text'])}}
         </div>
-        <div class="form-group">
+        <label class="btn btn-primary">選擇圖片
+        <div class="form-group" style="display:none">
             {{Form::file('cover_image')}}
         </div>
-        {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+        </label><br><br>
+        {{Form::submit('送出', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
 @endsection

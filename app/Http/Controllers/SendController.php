@@ -10,8 +10,8 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Order;
 use DB;
-//use \ECPay_PaymentMethod as ECPayMethod;
-//use \ECPay_AllInOne as ECPay;
+use \ECPay_PaymentMethod as ECPayMethod;
+//use TsaiYiHua\ECPay\Checkout;
 
 class SendController extends Controller 
 {
@@ -20,9 +20,12 @@ class SendController extends Controller
      *
      * @return void   
      */
+    protected $checkout;
+
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
+        //$this->checkout = $checkout;
     }
 
     /**
@@ -82,9 +85,10 @@ class SendController extends Controller
         $qtys = $request->input('qty');
         $shipping = $request->input('shipping');
 
-        /*try {
+        
+        try {
 
-            $obj = new \ECPay();
+            $obj = new \ECPay_AllInOne();
     
             //服務參數
             $obj->ServiceURL  = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";  //服務位置
@@ -96,12 +100,17 @@ class SendController extends Controller
 
             //基本參數(請依系統規劃自行調整)
             $MerchantTradeNo = "Test".time() ;
-            $obj->Send['ReturnURL']         = "http://www.ecpay.com.tw/receive.php" ;     //付款完成通知回傳的網址
+            $obj->Send['ReturnURL']         = "https://5a5b10746db2.ngrok.io" ;     //付款完成通知回傳的網址
+            $obj->Send['PeriodReturnURL']         = "https://5a5b10746db2.ngrok.io" ;    //付款完成通知回傳的網址
+            $obj->Send['ClientBackURL'] = " https://5a5b10746db2.ngrok.io/home" ;
             $obj->Send['MerchantTradeNo']   = $MerchantTradeNo;                           //訂單編號
             $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                        //交易時間
             $obj->Send['TotalAmount']       = array_sum($deposits);                                       //交易金額
             $obj->Send['TradeDesc']         = "good to drink" ;                           //交易描述
-            $obj->Send['ChoosePayment']     = ECPay_PaymentMethod::ALL ;                  //付款方式:全功能
+            //$obj->Send['ChoosePayment']     = ECPay_PaymentMethod::ALL ;                  //付款方式:全功能
+            $obj->Send['ChoosePayment']     = ECPayMethod::Credit ;              //付款方式:Credit
+            $obj->Send['IgnorePayment']     = ECPayMethod::GooglePay ;           //不使用付款方式:GooglePay
+
 
             //訂單的商品資料
             for($i=0 ; $i< count($ids) ; $i++ ){
@@ -127,7 +136,7 @@ class SendController extends Controller
             $obj->SendExtend['InvoiceRemark'] = '測試發票備註';
             $obj->SendExtend['DelayDay'] = '0';
             $obj->SendExtend['InvType'] = ECPay_InvType::General;
-            /
+            */
 
 
             //產生訂單(auto submit至ECPay)
@@ -137,13 +146,23 @@ class SendController extends Controller
         
         } catch (Exception $e) {
             echo $e->getMessage();
-        } */
+        } 
 
 
-        $user_order_id = strval(auth()->user()->id);
-        $user_order_id .= strval(date("-Ymd"));
-        $user_order_id .= strval(date("-hi"));
-        //$user_order_id = $MerchantTradeNo;
+        //$user_order_id = strval(auth()->user()->id);
+        //$user_order_id .= strval(date("-Ymd"));
+        //$user_order_id .= strval(date("-hi"));
+        $user_order_id = $MerchantTradeNo;
+
+        /*$formData = [
+            'UserId' => auth()->user()->id, // 用戶ID , Optional
+            'ItemDescription' => '產品簡介',
+            'ItemName' => 'Product Name',
+            'TotalAmount' => '2000',
+            'PaymentMethod' => 'Credit', // ALL, Credit, ATM, WebATM
+            'ReturnURL' => 'https://5a5b10746db2.ngrok.io',
+            'MerchantTradeNo' => $user_order_id,
+        ];*/
 
         
 
@@ -208,9 +227,21 @@ class SendController extends Controller
         $post = Post::find($borrow->borrow_id);
         $post->inventory = $post->inventory-$borrow->qty;
         $post->save();*/
-        return redirect('/send')->with('alert', 'created');
+        //return redirect('/send')->with('alert', 'created');
+        //return $this->checkout->setPostData($formData)->send();
     }
 
+    public function sendOrder()
+    {
+        $formData = [
+            'UserId' => 1, // 用戶ID , Optional
+            'ItemDescription' => '產品簡介',
+            'ItemName' => 'Product Name',
+            'TotalAmount' => '2000',
+            'PaymentMethod' => 'Credit', // ALL, Credit, ATM, WebATM
+        ];
+        return $this->checkout->setPostData($formData)->send();
+    }
     /**
      * Display the specified resource.
      *

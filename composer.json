@@ -17,7 +17,8 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "laravelcollective/html": "^6.1"
+        "laravelcollective/html": "^6.1",
+        "tsaiyihua/laravel-ecpay": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -41,7 +42,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "classmap": [
+            "app/ECPaySDK"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

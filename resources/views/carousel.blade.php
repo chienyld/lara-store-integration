@@ -2,12 +2,15 @@
 
 @section('content')
     <h2>輪播設定</h2>
+    <span>圖片比例為21:9</span>
         
     {!! Form::open(['action' => 'App\Http\Controllers\CarouselController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-        <div class="form-group">
+    <label class="btn btn-primary">選擇圖片
+        <div class="form-group" style="display:none;">
             {{Form::file('card_image')}}
         </div>
-        {{Form::submit('新增', ['class'=>'btn btn-primary'])}}
+    </label>
+        {{Form::submit('確認新增', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
 <hr>
 <div class="d-flex flex-wrap">
@@ -15,16 +18,18 @@
     @foreach($carousel as $card)
     
     <div class="col-lg-4 col-sm-12">
-        <img style="width:100%" src="/storage/card_image/{{$card->card_image}}"><hr>
+        <img style="width:100%" src="/storage/card_image/{{$card->card_image}}"><br><br>
     
         {!! Form::open(['action' => ['App\Http\Controllers\CarouselController@update',$card->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-        <div class="form-group">
+        <label class="btn btn-primary">更改圖片
+        <div class="form-group" style="display:none;">
             {{Form::file('card_image')}}
             {{Form::hidden('_method','PUT')}}
         </div>
+        </label><br><br>
         <div class="row">
         <div class="col-6">
-        {{Form::submit('更新', ['class'=>'btn btn-primary'])}}
+        {{Form::submit('上傳更新', ['class'=>'btn btn-primary'])}}
         {!! Form::close() !!}
         </div>
         <div class="col-6"> 
@@ -35,9 +40,9 @@
         {!!Form::close()!!}
         </div>
         </div>
-        
+        <br><hr>
     </div>
-    <hr>
+    
     @endforeach
 @endif
 </div> 

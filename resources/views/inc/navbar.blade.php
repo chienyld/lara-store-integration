@@ -14,7 +14,9 @@
 
             <!-- Branding Image -->
             <a style="font-size:15px;color:#fff" class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', '中山醫學大學學生會') }}
+                &nbsp<span>沏啡</span>
+                <!--{{ config('app.name', '沏啡') }}-->
+                <span style="font-size:0.7em;color:#deedfb">chiefe coffee</span>
             </a>
         </div>
 
