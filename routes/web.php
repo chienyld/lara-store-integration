@@ -33,6 +33,7 @@ Route::get('/type0', 'App\Http\Controllers\PostsController@type0');
 Route::get('/type1', 'App\Http\Controllers\PostsController@type1');
 Route::get('/type2', 'App\Http\Controllers\PostsController@type2');
 Route::get('/search', 'App\Http\Controllers\PostsController@index');
+Route::get('/choose', 'App\Http\Controllers\SendController@martmap');
 
 Route::post('/search', 'App\Http\Controllers\PostsController@search');
 

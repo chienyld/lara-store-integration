@@ -8,6 +8,7 @@
 /**
  *  物流類型
  */
+
 if (!class_exists('EcpayLogisticsType', false)) {
     abstract class EcpayLogisticsType {
         const CVS = 'CVS';// 超商取貨
@@ -2442,4 +2443,5 @@ if (!class_exists('EcpayIo', true)) {
 		}
 	}
 }
+
 ?>

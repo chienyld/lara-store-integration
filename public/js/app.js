@@ -8249,10 +8249,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['token'],
   data: function data() {
     return {
+      info: '',
       shipping: '0',
       address: '',
       details: {
@@ -8288,11 +8292,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  watch: {
+    info: function info(val) {
+      if (val != '') {
+        var i = 0;
+
+        for (i = 0; i <= 5; i++) {
+          setTimeout(function () {
+            document.getElementById('__paymentButton').click();
+          }, 3000);
+        }
+      }
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
     this.loadItems();
-    console.log(this.token);
+    console.log(this.token); //setTimeout(() => {document.getElementById('__paymentButton').click();}, 3000);
   },
   methods: {
     addItem: function addItem() {
@@ -8377,14 +8394,17 @@ __webpack_require__.r(__webpack_exports__);
           deposit: uprice,
           qty: uqty
         }).then(function (success) {
-          alert(_this.item.name + '申請成功！請於');
-          console.log(success);
-          console.log(success.data);
+          //alert(_this.item.name+'申請成功！請於');
+          //console.log(success); 
+          //console.log(success.data); 
+          this.info = success.data; //this.document.getElementById("__ecpayForm").submit(); 
+          //this.$refs.submitBtn.click();
         });
       }
 
       ;
       _this.items = [];
+      console.log(_this.items);
       console.log(_this.items);
       /*var _this = this;
       this.$http.post('/borrows',{
@@ -45057,8 +45077,8 @@ __webpack_require__.r(__webpack_exports__);
 				  pauseOnHover: false,
           		  arrows      : 'slider',
 				  padding: {
-						right: '6vh',
-						left : '6vh',
+						right: '2.5vw',
+						left : '2.5vw',
 					},
 				} ),
 			},
@@ -45372,162 +45392,184 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "col-lg-6 col-lg-offset-3" }, [
-      _c("h3", [_vm._v("我的購物清單")]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.items, function(item) {
-            return _c("tr", [
-              _c("td", [_vm._v(_vm._s(item.id))]),
+    _vm.info
+      ? _c("div", { domProps: { innerHTML: _vm._s(_vm.info) } })
+      : _c("div", { staticClass: "col-lg-6 col-lg-offset-3" }, [
+          _c(
+            "a",
+            { staticClass: "btn btn-default", attrs: { href: "/posts" } },
+            [_vm._v("回首頁")]
+          ),
+          _vm._v(" "),
+          _c("h3", [_vm._v("我的購物清單")]),
+          _vm._v(" "),
+          _c("table", { staticClass: "table" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.items, function(item) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(item.id))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.quantity))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.price))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeItem(item.id)
+                          }
+                        }
+                      },
+                      [_vm._v("移除")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("table", { staticClass: "table" }, [
+            _c("tr", [
+              _c("td", [_vm._v("種類:")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.name))]),
+              _c("td", [_vm._v(_vm._s(_vm.itemCount))])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", [_vm._v("數量:")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.quantity))]),
+              _c("td", [_vm._v(_vm._s(_vm.details.total_quantity))])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", [_vm._v("小計:")]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.price))]),
+              _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", [_vm._v("運費:")]),
               _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-danger",
-                    on: {
-                      click: function($event) {
-                        return _vm.removeItem(item.id)
-                      }
-                    }
-                  },
-                  [_vm._v("移除")]
-                )
-              ])
+              _vm.shipping == 0
+                ? _c("td", [_vm._v(_vm._s("$" + 0) + " ")])
+                : _c("td", [_vm._v(_vm._s("$" + 60) + " ")])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", [_vm._v("總金額:")]),
+              _vm._v(" "),
+              _vm.shipping == 0
+                ? _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
+                : _c("td", [
+                    _vm._v("$" + _vm._s(parseInt(_vm.details.total) + 60) + " ")
+                  ])
             ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _c("tr", [
-          _c("td", [_vm._v("種類:")]),
+          ]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.itemCount))])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("數量:")]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.details.total_quantity))])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("小計:")]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("運費:")]),
-          _vm._v(" "),
-          _vm.shipping == 0
-            ? _c("td", [_vm._v(_vm._s("$" + 0) + " ")])
-            : _c("td", [_vm._v(_vm._s("$" + 60) + " ")])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("總金額:")]),
-          _vm._v(" "),
-          _vm.shipping == 0
-            ? _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
-            : _c("td", [
-                _vm._v("$" + _vm._s(parseInt(_vm.details.total) + 60) + " ")
-              ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.shipping,
-            expression: "shipping"
-          }
-        ],
-        attrs: { type: "radio", id: "store", value: "0" },
-        domProps: { checked: _vm._q(_vm.shipping, "0") },
-        on: {
-          change: function($event) {
-            _vm.shipping = "0"
-          }
-        }
-      }),
-      _c("label", { attrs: { for: "store" } }, [_vm._v("   門市自取")]),
-      _vm._v("     \n                "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.shipping,
-            expression: "shipping"
-          }
-        ],
-        attrs: { type: "radio", id: "ship", value: "1" },
-        domProps: { checked: _vm._q(_vm.shipping, "1") },
-        on: {
-          change: function($event) {
-            _vm.shipping = "1"
-          }
-        }
-      }),
-      _c("label", { attrs: { for: "ship" } }, [_vm._v("   宅配寄送")]),
-      _vm._v(" "),
-      _vm.shipping == 1
-        ? _c("input", {
+          _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.address,
-                expression: "address"
+                value: _vm.shipping,
+                expression: "shipping"
               }
             ],
-            staticClass: "form-control",
-            staticStyle: { "border-radius": "8px" },
-            attrs: { placeholder: "地址" },
-            domProps: { value: _vm.address },
+            attrs: { type: "radio", id: "store", value: "0" },
+            domProps: { checked: _vm._q(_vm.shipping, "0") },
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.address = $event.target.value
+              change: function($event) {
+                _vm.shipping = "0"
               }
             }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _vm.shipping == 0 || _vm.address
-        ? _c(
-            "button",
-            {
-              staticClass: "btn-primary",
-              on: {
-                click: function($event) {
-                  return _vm.sendItem()
-                }
+          }),
+          _c("label", { attrs: { for: "store" } }, [_vm._v("   門市自取")]),
+          _vm._v("     \n                "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.shipping,
+                expression: "shipping"
               }
-            },
-            [_vm._v("結帳")]
-          )
-        : _vm._e()
-    ])
+            ],
+            attrs: { type: "radio", id: "ship", value: "1" },
+            domProps: { checked: _vm._q(_vm.shipping, "1") },
+            on: {
+              change: function($event) {
+                _vm.shipping = "1"
+              }
+            }
+          }),
+          _c("label", { attrs: { for: "ship" } }, [_vm._v("   宅配寄送")]),
+          _vm._v(" "),
+          _vm.shipping == 1
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.address,
+                    expression: "address"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { "border-radius": "8px" },
+                attrs: { placeholder: "地址" },
+                domProps: { value: _vm.address },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.address = $event.target.value
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.shipping == 1
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn-primary",
+                  staticStyle: { "border-radius": "8px" },
+                  attrs: {
+                    onclick: "location.href='http://localhost:8000/choose'"
+                  }
+                },
+                [_vm._v("choose")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.shipping == 0 || _vm.address
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.sendItem()
+                    }
+                  }
+                },
+                [_vm._v("結帳")]
+              )
+            : _vm._e()
+        ])
   ])
 }
 var staticRenderFns = [

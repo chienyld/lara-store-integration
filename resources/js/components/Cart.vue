@@ -1,6 +1,8 @@
 <template>
 <div class="container">
-            <div class="col-lg-6 col-lg-offset-3">
+    <div v-if="info" v-html="info"></div>
+            <div v-else class="col-lg-6 col-lg-offset-3">
+                <a href="/posts" class="btn btn-default">回首頁</a>
                 <h3>我的購物清單</h3>
                 <table class="table">
                     <thead>
@@ -51,6 +53,7 @@
                 <input type="radio" id="store" v-model="shipping" value="0"><label for="store"> &nbsp 門市自取</label>&nbsp&nbsp&nbsp&nbsp&nbsp
                 <input type="radio" id="ship" v-model="shipping" value="1"><label for="ship"> &nbsp 宅配寄送</label>
                 <input v-if="shipping==1" v-model="address" placeholder="地址" class="form-control" style="border-radius:8px">
+                <button v-if="shipping==1" onclick="location.href='http://localhost:8000/choose'" class="btn-primary" style="border-radius:8px">choose</button>
                 <br>
                 
                 
@@ -64,6 +67,7 @@ export default {
     props: ['token'],
     data: function (){
         return {
+            info:'',
             shipping:'0',
             address:'',
             details: {
@@ -96,10 +100,22 @@ export default {
         }
         }
     },
+    watch:{
+        info:function(val){
+        if(val!=''){
+            let i =0;
+            for(i=0;i<=5;i++){
+                setTimeout(() => {             
+                    document.getElementById('__paymentButton').click();}, 3000);
+                }
+            }
+        }
+    },
     mounted:function(){
         var _this=this;
         this.loadItems();
         console.log(this.token);
+        //setTimeout(() => {document.getElementById('__paymentButton').click();}, 3000);
     },
     methods: {
         addItem: function() {
@@ -175,15 +191,19 @@ export default {
                 qty:uqty
                 })
             .then(function(success) {
-                alert(_this.item.name+'申請成功！請於');
-                console.log(success); 
-                console.log(success.data); 
+                //alert(_this.item.name+'申請成功！請於');
+                //console.log(success); 
+                //console.log(success.data); 
+                this.info=success.data;
+                //this.document.getElementById("__ecpayForm").submit(); 
+                //this.$refs.submitBtn.click();
+                
             });
         };
             _this.items=[];
-            console.log(_this.items);   
-                      
-                                
+            console.log(_this.items); 
+            console.log(_this.items); 
+                                  
             /*var _this = this;
             this.$http.post('/borrows',{
                 _token:_token,

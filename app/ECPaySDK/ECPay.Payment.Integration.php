@@ -604,35 +604,37 @@ abstract class ECPay_Aio
     protected static function HtmlEncode($target = "_self", $arParameters, $ServiceURL, $szCheckMacValue, $paymentButton = '') {
 
         //生成表單，自動送出
+        /*
         $szHtml =  '<!DOCTYPE html>';
         $szHtml .= '<html>';
         $szHtml .=     '<head>';
         $szHtml .=         '<meta charset="utf-8">';
         $szHtml .=     '</head>';
         $szHtml .=     '<body>';
-        $szHtml .=         "<form id=\"__ecpayForm\" method=\"post\" target=\"{$target}\" action=\"{$ServiceURL}\">";
+        */
+        $szHtml =         "<form  id=\"__ecpayForm\" method=\"post\" target=\"{$target}\" action=\"{$ServiceURL}\">";
 
         foreach ($arParameters as $keys => $value) {
             $szHtml .=         "<input type=\"hidden\" name=\"{$keys}\" value=\"". htmlentities($value) . "\" />";
         }
 
-        $szHtml .=             "<input type=\"hidden\" name=\"CheckMacValue\" value=\"{$szCheckMacValue}\" />";
+        $szHtml .=             "<input ref=\"__ecpayForm\" type=\"hidden\" name=\"CheckMacValue\" value=\"{$szCheckMacValue}\" />";
 
-        if(!empty($paymentButton))
-        {
-            $szHtml .=          "<input type=\"submit\" id=\"__paymentButton\" value=\"{$paymentButton}\" />";
-        }
+        //if(!empty($paymentButton))
+        
+            $szHtml .=          "<button class=\"btn-primary\" type=\"submit\" ref=\"__paymentButton\" id=\"__paymentButton\" value=\"{$paymentButton}\">前往付款</button>";
+        
 
         $szHtml .=         '</form>';
 
-        if(empty($paymentButton))
+        /*if(empty($paymentButton))
         {
             $szHtml .=         '<script type="text/javascript">document.getElementById("__ecpayForm").submit();</script>';
-        }
+        }*/
 
-        $szHtml .=     '</body>';
-        $szHtml .= '</html>';
-
+        //$szHtml .=     '</body>';
+        //$szHtml .= '</html>';
+        
 
         return $szHtml;
     }

@@ -11,6 +11,22 @@ use App\Models\User;
 use App\Models\Order;
 use DB;
 use \ECPay_PaymentMethod as ECPayMethod;
+use \EcpayLogistics;
+use \EcpayLogisticsType;
+use \EcpayLogisticsSubType;
+use \EcpayIsCollection;
+use \EcpayDevice;
+use \EcpayTestMerchantId;
+use \EcpayUrl;
+use \EcpayTestUrl;
+use \EcpayTemperature;
+use \EcpayDistance;
+use \EcpaySpecification;
+use \EcpayScheduledPickupTime;
+use \EcpayScheduledDeliveryTime;
+use \EcpayStoreType;
+use \EcpayCheckMacValue;
+use \EcpayIo;
 //use TsaiYiHua\ECPay\Checkout;
 
 class SendController extends Controller 
@@ -69,15 +85,35 @@ class SendController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function martmap() {
+        define('HOME_URL', 'http://www.sample.com.tw/logistics_dev');
+        try {
+            $AL = new EcpayLogistics();
+            $AL->Send = array(
+                'MerchantID' => '2000132',
+                'MerchantTradeNo' => 'no' . date('YmdHis'),
+                'LogisticsSubType' => EcpayLogisticsSubType::UNIMART,
+                'IsCollection' => EcpayIsCollection::NO,
+                'ServerReplyURL' => HOME_URL . '/ServerReplyURL.php',
+                'ExtraData' => '測試額外資訊',
+                'Device' => EcpayDevice::PC
+            );
+            // CvsMap(Button名稱, Form target)
+            $html = $AL->CvsMap('電子地圖(統一)');
+            echo $html;
+        } catch(Exception $e) {
+            echo $e->getMessage();
+        }
+    }
     public function store(Request $request) 
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'id' => 'required',
             'name' => 'required',
             'deposit' => 'required',
             'qty' => 'required',
             'shipping'=>'required'
-        ]);
+        ]);*/
 
         $ids = $request->input('id');
         $items = $request->input('name');
@@ -85,74 +121,159 @@ class SendController extends Controller
         $qtys = $request->input('qty');
         $shipping = $request->input('shipping');
 
+        if($request->input('shipping')==1){
+            try {
+                $AL = new EcpayLogistics();
+                $AL->HashKey = '5294y06JbISpM5x9';
+                $AL->HashIV = 'v77hoKGq4kWxNNIS';
+                $AL->Send = array(
+                    'MerchantID' => '2000132',
+                    'MerchantTradeNo' => 'no' . date('YmdHis'),
+                    'MerchantTradeDate' => date('Y/m/d H:i:s'),
+                    'LogisticsType' => EcpayLogisticsType::CVS,
+                    'LogisticsSubType' => EcpayLogisticsSubType::UNIMART,
+                    'GoodsAmount' => 1500,
+                    'CollectionAmount' => 10,
+                    'IsCollection' => EcpayIsCollection::YES,
+                    'GoodsName' => '測試商品',
+                    'SenderName' => '測試寄件者',
+                    'SenderPhone' => '0226550115',
+                    'SenderCellPhone' => '0911222333',
+                    'ReceiverName' => '測試收件者',
+                    'ReceiverPhone' => '0226550115',
+                    'ReceiverCellPhone' => '0933222111',
+                    'ReceiverEmail' => 'test_emjhdAJr@test.com.tw',
+                    'TradeDesc' => '測試交易敘述',
+                    'ServerReplyURL' => HOME_URL . '/ServerReplyURL.php',
+                    'LogisticsC2CReplyURL' => HOME_URL . '/LogisticsC2CReplyURL.php',
+                    'Remark' => '測試備註',
+                    'PlatformID' => '',
+                );
         
-        try {
-
-            $obj = new \ECPay_AllInOne();
-    
-            //服務參數
-            $obj->ServiceURL  = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";  //服務位置
-            $obj->HashKey     = '5294y06JbISpM5x9' ;                                          //測試用Hashkey，請自行帶入ECPay提供的HashKey
-            $obj->HashIV      = 'v77hoKGq4kWxNNIS' ;                                          //測試用HashIV，請自行帶入ECPay提供的HashIV
-            $obj->MerchantID  = '2000132';                                                    //測試用MerchantID，請自行帶入ECPay提供的MerchantID
-            $obj->EncryptType = '1';                                                          //CheckMacValue加密類型，請固定填入1，使用SHA256加密
-
-
-            //基本參數(請依系統規劃自行調整)
-            $MerchantTradeNo = "Test".time() ;
-            $obj->Send['ReturnURL']         = "https://5a5b10746db2.ngrok.io" ;     //付款完成通知回傳的網址
-            $obj->Send['PeriodReturnURL']         = "https://5a5b10746db2.ngrok.io" ;    //付款完成通知回傳的網址
-            $obj->Send['ClientBackURL'] = " https://5a5b10746db2.ngrok.io/home" ;
-            $obj->Send['MerchantTradeNo']   = $MerchantTradeNo;                           //訂單編號
-            $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                        //交易時間
-            $obj->Send['TotalAmount']       = array_sum($deposits);                                       //交易金額
-            $obj->Send['TradeDesc']         = "good to drink" ;                           //交易描述
-            //$obj->Send['ChoosePayment']     = ECPay_PaymentMethod::ALL ;                  //付款方式:全功能
-            $obj->Send['ChoosePayment']     = ECPayMethod::Credit ;              //付款方式:Credit
-            $obj->Send['IgnorePayment']     = ECPayMethod::GooglePay ;           //不使用付款方式:GooglePay
-
-
-            //訂單的商品資料
-            for($i=0 ; $i< count($ids) ; $i++ ){
-            array_push($obj->Send['Items'], array('Name' => $items[$i], 'Price' => (int)$deposits[$i],
-                    'Currency' => "元", 'Quantity' => (int) $qtys[$i], 'URL' => "dedwed"));
+                $AL->SendExtend = array(
+                    'ReceiverStoreID' => '991182',
+                    'ReturnStoreID' => '991182'
+                );
+                // BGCreateShippingOrder()
+                $Result = $AL->BGCreateShippingOrder();
+                echo '<pre>' . print_r($Result, true) . '</pre>';
+            } catch(Exception $e) {
+                echo $e->getMessage();
             }
-
-            # 電子發票參數
-            /*
-            $obj->Send['InvoiceMark'] = ECPay_InvoiceState::Yes;
-            $obj->SendExtend['RelateNumber'] = "Test".time();
-            $obj->SendExtend['CustomerEmail'] = 'test@ecpay.com.tw';
-            $obj->SendExtend['CustomerPhone'] = '0911222333';
-            $obj->SendExtend['TaxType'] = ECPay_TaxType::Dutiable;
-            $obj->SendExtend['CustomerAddr'] = '台北市南港區三重路19-2號5樓D棟';
-            $obj->SendExtend['InvoiceItems'] = array();
-            // 將商品加入電子發票商品列表陣列
-            foreach ($obj->Send['Items'] as $info)
-            {
-                array_push($obj->SendExtend['InvoiceItems'],array('Name' => $info['Name'],'Count' =>
-                    $info['Quantity'],'Word' => '個','Price' => $info['Price'],'TaxType' => ECPay_TaxType::Dutiable));
+        }
+        if($request->input('shipping')==2){
+            try {
+                define('HOME_URL', 'http://www.sample.com.tw/logistics_dev');
+                $AL = new \EcpayLogistics();
+                $AL->HashKey = '5294y06JbISpM5x9';
+                $AL->HashIV = 'v77hoKGq4kWxNNIS';
+                $AL->Send = array(
+                    'MerchantID' => '2000132',
+                    'MerchantTradeNo' => 'no' . date('YmdHis'),
+                    'MerchantTradeDate' => date('Y/m/d H:i:s'),
+                    'LogisticsType' => EcpayLogisticsType::CVS,
+                    'LogisticsSubType' => EcpayLogisticsSubType::UNIMART,
+                    'GoodsAmount' => 1500,
+                    'CollectionAmount' => 10,
+                    'IsCollection' => EcpayIsCollection::YES,
+                    'GoodsName' => '測試商品',
+                    'SenderName' => '測試寄件者',
+                    'SenderPhone' => '0226550115',
+                    'SenderCellPhone' => '0911222333',
+                    'ReceiverName' => '測試收件者',
+                    'ReceiverPhone' => '0226550115',
+                    'ReceiverCellPhone' => '0933222111',
+                    'ReceiverEmail' => 'test_emjhdAJr@test.com.tw',
+                    'TradeDesc' => '測試交易敘述',
+                    'ServerReplyURL' => HOME_URL . '/ServerReplyURL.php',
+                    'LogisticsC2CReplyURL' => HOME_URL . '/LogisticsC2CReplyURL.php',
+                    'Remark' => '測試備註',
+                    'PlatformID' => '',
+                );
+        
+                $AL->SendExtend = array(
+                    'ReceiverStoreID' => '991182',
+                    'ReturnStoreID' => '991182'
+                );
+                // BGCreateShippingOrder()
+                $Result = $AL->BGCreateShippingOrder();
+                echo '<pre>' . print_r($Result, true) . '</pre>';
+            } catch(Exception $e) {
+                echo $e->getMessage();
             }
-            $obj->SendExtend['InvoiceRemark'] = '測試發票備註';
-            $obj->SendExtend['DelayDay'] = '0';
-            $obj->SendExtend['InvType'] = ECPay_InvType::General;
-            */
+        }else{
+            try {
 
-
-            //產生訂單(auto submit至ECPay)
-            $obj->CheckOut();
+                $obj = new \ECPay_AllInOne();
         
+                //服務參數
+                $obj->ServiceURL  = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";  //服務位置
+                $obj->HashKey     = '5294y06JbISpM5x9' ;                                          //測試用Hashkey，請自行帶入ECPay提供的HashKey
+                $obj->HashIV      = 'v77hoKGq4kWxNNIS' ;                                          //測試用HashIV，請自行帶入ECPay提供的HashIV
+                $obj->MerchantID  = '2000132';                                                    //測試用MerchantID，請自行帶入ECPay提供的MerchantID
+                $obj->EncryptType = '1';                                                          //CheckMacValue加密類型，請固定填入1，使用SHA256加密
 
-        
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        } 
+
+                //基本參數(請依系統規劃自行調整)
+                $MerchantTradeNo = "Test".time() ;
+                $obj->Send['ReturnURL']         = "https://b0b0d3d3397f.ngrok.io" ;     //付款完成通知回傳的網址
+                $obj->Send['PeriodReturnURL']         = "https://b0b0d3d3397f.ngrok.io" ;    //付款完成通知回傳的網址
+                $obj->Send['ClientBackURL'] = " https://b0b0d3d3397f.ngrok.io/home" ;
+                $obj->Send['MerchantTradeNo']   = $MerchantTradeNo;                           //訂單編號
+                $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                        //交易時間
+                $obj->Send['TotalAmount']       = array_sum($deposits);                                       //交易金額
+                //$obj->Send['TotalAmount']       = "2000";                                       //交易金額
+                $obj->Send['TradeDesc']         = "good to drink" ;                           //交易描述
+                $obj->Send['ChoosePayment']     = ECPayMethod::ALL ;                  //付款方式:全功能
+                //$obj->Send['ChoosePayment']     = ECPayMethod::Credit ;              //付款方式:Credit
+                //$obj->Send['IgnorePayment']     = ECPayMethod::GooglePay ;           //不使用付款方式:GooglePay
+
+
+                //訂單的商品資料
+                for($i=0 ; $i< count($ids) ; $i++ ){
+                array_push($obj->Send['Items'], array('Name' => $items[$i], 'Price' => (int)$deposits[$i],
+                        'Currency' => "元", 'Quantity' => (int) $qtys[$i], 'URL' => "dedwed"));
+                }
+                /*array_push($obj->Send['Items'], array('Name' => "歐付寶黑芝麻豆漿", 'Price' => (int)"2000",
+                    'Currency' => "元", 'Quantity' => (int) "1", 'URL' => "dedwed"));*/
+
+                # 電子發票參數
+                /*
+                $obj->Send['InvoiceMark'] = ECPay_InvoiceState::Yes;
+                $obj->SendExtend['RelateNumber'] = "Test".time();
+                $obj->SendExtend['CustomerEmail'] = 'test@ecpay.com.tw';
+                $obj->SendExtend['CustomerPhone'] = '0911222333';
+                $obj->SendExtend['TaxType'] = ECPay_TaxType::Dutiable;
+                $obj->SendExtend['CustomerAddr'] = '台北市南港區三重路19-2號5樓D棟';
+                $obj->SendExtend['InvoiceItems'] = array();
+                // 將商品加入電子發票商品列表陣列
+                foreach ($obj->Send['Items'] as $info)
+                {
+                    array_push($obj->SendExtend['InvoiceItems'],array('Name' => $info['Name'],'Count' =>
+                        $info['Quantity'],'Word' => '個','Price' => $info['Price'],'TaxType' => ECPay_TaxType::Dutiable));
+                }
+                $obj->SendExtend['InvoiceRemark'] = '測試發票備註';
+                $obj->SendExtend['DelayDay'] = '0';
+                $obj->SendExtend['InvType'] = ECPay_InvType::General;
+                */
+
+
+                //產生訂單(auto submit至ECPay)
+                $obj->CheckOut();
+            
+
+            
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            } 
+        }
+        //return redirect('html')->with('htmlsend',$htmlsend);
 
 
         //$user_order_id = strval(auth()->user()->id);
         //$user_order_id .= strval(date("-Ymd"));
         //$user_order_id .= strval(date("-hi"));
-        $user_order_id = $MerchantTradeNo;
+        //$user_order_id = $MerchantTradeNo;
 
         /*$formData = [
             'UserId' => auth()->user()->id, // 用戶ID , Optional
@@ -165,7 +286,7 @@ class SendController extends Controller
         ];*/
 
         
-
+/*
         for($i=0 ; $i< count($ids) ; $i++ ){
         $borrow=new Borrow;
         $borrow->order_id = $user_order_id;
@@ -199,7 +320,7 @@ class SendController extends Controller
         }
         
         $order->status = false;
-        $order->save();
+        $order->save();*/
         /*
         $this->validate($request, [
             'id' => 'required',

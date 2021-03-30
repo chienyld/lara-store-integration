@@ -2,7 +2,7 @@
 
 @section('content')
 <div  class="postshow">
-    <a href="/posts" class="btn btn-default">Go Back</a>
+    <a href="/posts" class="btn btn-default">回首頁</a>
     <div class="container">
     <div class="row" style="padding:20px">
         <div class="col-lg-4 col-md-12" style="margin-top:30px;padding:15px">

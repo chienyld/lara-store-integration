@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if($carousel) 
+    @if($carousel)
     <splide>
             @foreach($carousel as $card)
         <splide-slide>
