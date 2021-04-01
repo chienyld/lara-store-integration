@@ -45,9 +45,10 @@
                         <div style="padding:1vh">
                             <h2 id="item"><a href="/posts/{{$post->id}}">{{$post->title}}</a></h2>
                             <h3 id="inventory">${{$post->deposit}}</h3>
-                            @if($post->inventory)
+                            @if($post->inventory && $post->type!=1)
                             <h3 id="inventory">剩餘數量 <b> {!!$post->inventory!!} </b> </h3>
-                            @else
+                            @endif
+                            @if(!$post->inventory)
                             <h4 style="color:#df4c4c;font-size:1rem">缺貨中</h4>
                             @endif
                         </div>

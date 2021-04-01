@@ -38,11 +38,12 @@
                             @endforeach
                         </table>
                           
-                        <h4>小計 : {{$sum}}</h4>
+                        <h5>小計 : {{$sum}}</h5>
                         @if($order->shipping==0)
-                        <h4>運費 : 0</h4>
+                        <h5>運費 : 0</h5>
                         @else
-                        <h4>運費 : 60</h4>
+                        <h5>運費 : 60</h5>
+                        <h5>地址 : {{$order->address}}</h5>
                         @endif
                         <h3>總金額 : {{$order->total}}</h3>
                     @else
