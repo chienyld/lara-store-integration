@@ -48,7 +48,7 @@
                         <h3>總金額 : {{$order->total}}</h3>
                         @if($order->payment==0)
                         <h5>付款狀態 : 未付款</h5>
-                        <button class="btn primary-btn">前往付款</button>
+                        <button class="btn primary-btn" >前往付款</button>
                         @else
                         <h5>付款狀態 : 已付款完成</h5>
                         @endif
