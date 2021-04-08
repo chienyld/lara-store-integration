@@ -62,8 +62,11 @@ Route::delete('/cart/{id}','App\Http\Controllers\CartController@delete')->name('
 Route::post('/borrows','App\Http\Controllers\SendController@store')->middleware('verified','active');
 
 Route::post('/send/lookup','App\Http\Controllers\SendController@lookup')->middleware('verified','active');
+Route::post('/send/lookup','App\Http\Controllers\SendController@lookup')->middleware('verified','active');
 Route::get('/send','App\Http\Controllers\OrderController@index')->middleware('verified','active');
-Route::post('/send/{id}','App\Http\Controllers\SendController@verify')->middleware('verified','active');
+
+Route::post('/paymentCheck','App\Http\Controllers\SendController@paymentCheck');
+Route::get('/payed','App\Http\Controllers\SendController@redirectFromECpay');
 
 //Route::get('/order','App\Http\Controllers\OrderController@index')->middleware('verified');
 Route::post('/order/{id}','App\Http\Controllers\OrderController@verify')->middleware('verified','active','admin');

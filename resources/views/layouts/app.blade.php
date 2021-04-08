@@ -26,6 +26,7 @@
             @yield('content')
         </div>
     </div>
+    <br>
     @include('footer')
 
     <!--     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script> -->

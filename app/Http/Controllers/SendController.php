@@ -114,12 +114,77 @@ class SendController extends Controller
             'qty' => 'required',
             'shipping'=>'required'
         ]);*/
+        $user_order_id = strval(auth()->user()->id);
+        $user_order_id .= time(); 
 
         $ids = $request->input('id');
         $items = $request->input('name');
         $deposits = $request->input('deposit');
         $qtys = $request->input('qty');
         $shipping = $request->input('shipping');
+        $totalAdding = 0;
+        for($i=0 ; $i< count($ids) ; $i++ ){
+            $borrow=new Borrow;
+            $borrow->order_id = $user_order_id;
+            $borrow->borrow_id = $ids[$i];
+            $borrow->user_id = auth()->user()->id; // get this from session or wherever it came from
+            $borrow->user_name = auth()->user()->name; // get this from session or wherever it came from
+            $borrow->name = $items[$i];
+            $borrow->depositamt = $deposits[$i];
+            $borrow->qty = $qtys[$i];
+            $borrow->status = false;
+            $borrow->save();
+    
+            $post = Post::find($borrow->borrow_id);
+            $post->inventory = $post->inventory-$borrow->qty;
+            $post->save();
+            
+            $totalAdding += $deposits[$i]*$qtys[$i];
+            }
+            $order = new Order;
+            $order->order_id = $user_order_id;
+            $order->user_id = auth()->user()->id;
+            $order->user_name = auth()->user()->name;
+            $order->shipping = $shipping;
+            $order->payment = false;
+            if($shipping==0){ 
+                $order->total = $totalAdding;
+                $order->address = 0;
+            }else{
+                $order->total = $totalAdding+60;
+                $order->address = $request->input('address');
+            }
+            
+            $order->status = false;
+            $order->save();
+            
+            /*$this->validate($request, [
+                'id' => 'required',
+                'name' => 'required',
+                'deposit' => 'required',
+                'qty' => 'required',
+                'returndate' => 'required',
+                'borrowdate' => 'required',
+                'time_period' => 'required',
+            ]);
+            
+            $borrow=new Borrow;
+            $borrow->borrow_id = $request->input('id');
+            $borrow->user_id = auth()->user()->id; // get this from session or wherever it came from
+            $borrow->user_name = auth()->user()->name; // get this from session or wherever it came from
+            $borrow->name = $request->input('name');
+            $borrow->depositamt = $request->input('deposit');
+            $borrow->qty = $request->input('qty');
+            $borrow->borrow_date = $request->input('borrowdate');
+            $borrow->return_date = $request->input('returndate');
+            $borrow->time_period = $request->input('time_period');
+            $borrow->status = false;
+            $borrow->save();
+    
+            $post = Post::find($borrow->borrow_id);
+            $post->inventory = $post->inventory-$borrow->qty;
+            $post->save();*/
+        
 
         if($request->input('shipping')==1){
             try {
@@ -213,15 +278,24 @@ class SendController extends Controller
                 $obj->MerchantID  = '2000132';                                                    //測試用MerchantID，請自行帶入ECPay提供的MerchantID
                 $obj->EncryptType = '1';                                                          //CheckMacValue加密類型，請固定填入1，使用SHA256加密
 
-
+                //訂單的商品資料
+                $costing = array();
+                for($i=0 ; $i< count($ids) ; $i++ ){
+                    array_push($obj->Send['Items'], array('Name' => $items[$i], 'Price' => (int)$deposits[$i],
+                            'Currency' => "元", 'Quantity' => (int) $qtys[$i], 'URL' => "dedwed"));
+                    $oneitem=(int)$deposits[$i]*(int) $qtys[$i];
+                    array_push($costing,$oneitem);     
+                    }
                 //基本參數(請依系統規劃自行調整)
-                $MerchantTradeNo = "Test".time() ;
-                $obj->Send['ReturnURL']         = "https://b0b0d3d3397f.ngrok.io" ;     //付款完成通知回傳的網址
-                $obj->Send['PeriodReturnURL']         = "https://b0b0d3d3397f.ngrok.io" ;    //付款完成通知回傳的網址
-                $obj->Send['ClientBackURL'] = " https://b0b0d3d3397f.ngrok.io/home" ;
+                       
+                $MerchantTradeNo =$user_order_id;
+                //$MerchantTradeNo = "Test".time() ;
+                $obj->Send['ReturnURL']         = "https://e444fdf722db.ngrok.io/paymentCheck" ;     //付款完成通知回傳的網址
+                $obj->Send['PeriodReturnURL']         = "https://e444fdf722db.ngrok.io/paymentCheck" ;    //付款完成通知回傳的網址
+                $obj->Send['ClientBackURL'] = " https://e444fdf722db.ngrok.io/payed" ;
                 $obj->Send['MerchantTradeNo']   = $MerchantTradeNo;                           //訂單編號
                 $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                        //交易時間
-                $obj->Send['TotalAmount']       = array_sum($deposits);                                       //交易金額
+                $obj->Send['TotalAmount']       = array_sum($costing);                                       //交易金額
                 //$obj->Send['TotalAmount']       = "2000";                                       //交易金額
                 $obj->Send['TradeDesc']         = "good to drink" ;                           //交易描述
                 $obj->Send['ChoosePayment']     = ECPayMethod::ALL ;                  //付款方式:全功能
@@ -229,11 +303,7 @@ class SendController extends Controller
                 //$obj->Send['IgnorePayment']     = ECPayMethod::GooglePay ;           //不使用付款方式:GooglePay
 
 
-                //訂單的商品資料
-                for($i=0 ; $i< count($ids) ; $i++ ){
-                array_push($obj->Send['Items'], array('Name' => $items[$i], 'Price' => (int)$deposits[$i],
-                        'Currency' => "元", 'Quantity' => (int) $qtys[$i], 'URL' => "dedwed"));
-                }
+                
                 /*array_push($obj->Send['Items'], array('Name' => "歐付寶黑芝麻豆漿", 'Price' => (int)"2000",
                     'Currency' => "元", 'Quantity' => (int) "1", 'URL' => "dedwed"));*/
 
@@ -269,11 +339,8 @@ class SendController extends Controller
         }
         //return redirect('html')->with('htmlsend',$htmlsend);
 
-
-        //$user_order_id = strval(auth()->user()->id);
         //$user_order_id .= strval(date("-Ymd"));
         //$user_order_id .= strval(date("-hi"));
-        //$user_order_id = $MerchantTradeNo;
 
         /*$formData = [
             'UserId' => auth()->user()->id, // 用戶ID , Optional
@@ -286,72 +353,22 @@ class SendController extends Controller
         ];*/
 
         
-/*
-        for($i=0 ; $i< count($ids) ; $i++ ){
-        $borrow=new Borrow;
-        $borrow->order_id = $user_order_id;
-        $borrow->borrow_id = $ids[$i];
-        $borrow->user_id = auth()->user()->id; // get this from session or wherever it came from
-        $borrow->user_name = auth()->user()->name; // get this from session or wherever it came from
-        $borrow->name = $items[$i];
-        $borrow->depositamt = $deposits[$i];
-        $borrow->qty = $qtys[$i];
-        $borrow->status = false;
-        $borrow->save();
-
-        $post = Post::find($borrow->borrow_id);
-        $post->inventory = $post->inventory-$borrow->qty;
-        $post->save();
-
-        }
-        $order = new Order;
-        $order->order_id = $user_order_id;
-        $order->user_id = auth()->user()->id;
-        $order->user_name = auth()->user()->name;
-        $order->shipping = $shipping;
-        $order->payment = false;
-
-        if($shipping==0){ 
-            $order->total = array_sum($deposits);
-            $order->address = 0;
-        }else{
-            $order->total = array_sum($deposits)+60;
-            $order->address = $request->input('address');
-        }
-        
-        $order->status = false;
-        $order->save();*/
-        /*
-        $this->validate($request, [
-            'id' => 'required',
-            'name' => 'required',
-            'deposit' => 'required',
-            'qty' => 'required',
-            'returndate' => 'required',
-            'borrowdate' => 'required',
-            'time_period' => 'required',
-        ]);
-        
-        $borrow=new Borrow;
-        $borrow->borrow_id = $request->input('id');
-        $borrow->user_id = auth()->user()->id; // get this from session or wherever it came from
-        $borrow->user_name = auth()->user()->name; // get this from session or wherever it came from
-        $borrow->name = $request->input('name');
-        $borrow->depositamt = $request->input('deposit');
-        $borrow->qty = $request->input('qty');
-        $borrow->borrow_date = $request->input('borrowdate');
-        $borrow->return_date = $request->input('returndate');
-        $borrow->time_period = $request->input('time_period');
-        $borrow->status = false;
-        $borrow->save();
-
-        $post = Post::find($borrow->borrow_id);
-        $post->inventory = $post->inventory-$borrow->qty;
-        $post->save();*/
+        //-----------------------//
         //return redirect('/send')->with('alert', 'created');
         //return $this->checkout->setPostData($formData)->send();
     }
-
+    public function paymentCheck(Request $request)
+    {
+        $MerchantTradeNo = $request->input('MerchantTradeNo');
+        $order = Order::where('order_id',$MerchantTradeNo)->first();
+        //$order = Order::where('order_id', '=', request('MerchantTradeNo'))->firstOrFail();
+        $order->payment = !$order->payment;
+        $order->save();
+    }
+    public function redirectFromECpay () {
+        session()->flash('success', 'Order success!');
+        return redirect('/home');
+    }
     public function sendOrder()
     {
         $formData = [
