@@ -24,7 +24,7 @@
                 if (this.status==true){
                 return '停權'}
                 else{
-                return '恢復'
+                return '許可'
                 }
             },
             actionButton:function (){

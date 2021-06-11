@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe7f02c3eb7825543a39135e71724643",
+    "content-hash": "90d6d2a453eb635702971ea6455429c4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2507,6 +2507,56 @@
             "time": "2020-08-18T17:17:46+00:00"
         },
         {
+            "name": "silviolleite/laravelpwa",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silviolleite/laravel-pwa.git",
+                "reference": "5f7135d2ee870af01793c9fdf6b1b932b546e20e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silviolleite/laravel-pwa/zipball/5f7135d2ee870af01793c9fdf6b1b932b546e20e",
+                "reference": "5f7135d2ee870af01793c9fdf6b1b932b546e20e",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelPWA\\Providers\\LaravelPWAServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelPWA\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Silvio Luis Leite",
+                    "email": "silviolleite@gmail.com"
+                }
+            ],
+            "description": "Looks like an app, feels like an app, but NOT an app.",
+            "keywords": [
+                "laravel",
+                "php",
+                "progressive web apps",
+                "pwa"
+            ],
+            "support": {
+                "issues": "https://github.com/silviolleite/laravel-pwa/issues",
+                "source": "https://github.com/silviolleite/laravel-pwa/tree/2.0.3"
+            },
+            "time": "2020-08-20T12:19:16+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.3",
             "source": {
@@ -4832,55 +4882,6 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2020-07-13T06:12:54+00:00"
-        },
-        {
-            "name": "tsaiyihua/laravel-ecpay",
-            "version": "2.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tsaiyihua/laravel-ecpay.git",
-                "reference": "f5eead25d35cc93de535dc9832df28587f728190"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tsaiyihua/laravel-ecpay/zipball/f5eead25d35cc93de535dc9832df28587f728190",
-                "reference": "f5eead25d35cc93de535dc9832df28587f728190",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^6|^7|^8",
-                "php": ">=7.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "TsaiYiHua\\ECPay\\ECPayServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TsaiYiHua\\ECPay\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yihua Tsai",
-                    "email": "tsaiyihua@gmail.com"
-                }
-            ],
-            "description": "ecpay library for laravel",
-            "keywords": [
-                "ecpay",
-                "laravel",
-                "payment"
-            ],
-            "time": "2020-11-19T06:21:56+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -7435,5 +7436,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

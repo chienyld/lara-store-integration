@@ -23,14 +23,15 @@ class DatabaseSeeder extends Seeder
             'content' => '這是公告告',
         ]);
         Bulletin::create([
-            'content' => '這是借用規則',
+            'content' => '這是醫院院內機能整合系統，本平台提供所有本院周邊店家一個自由交易的空間，以及訂單系統，庫存管理等功能。',
         ]);
         User::truncate();
         User::create([
-            'name' => 'chiefe',
+            'name' => 'admin',
             'privilege' => 'sa_admin',
-            'email' => 'chiefecoffee@gmail.com',
-            'email_verified_at' => '2020-11-09 00:30:00',
+            'active' => true,
+            'email' => 'chien@github.io',
+            'email_verified_at' => '2021-01-01 00:30:00',
             'password' => Hash::make('00000000'),
         ]);
     }

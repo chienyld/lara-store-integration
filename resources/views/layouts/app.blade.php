@@ -17,9 +17,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-grid.min.css') }}" rel="stylesheet">
+    @laravelPWA
 </head>
 <body style="overflow-x: hidden" translate="no">
-    <div id="app" style="font-family: sans-serif,'Roboto',Montserrat;overflow-x:hidden">
+    <div id="app" style="font-family: sans-serif,'Roboto',Montserrat;overflow-x:hidden;min-height:70vh">
         @include('inc.navbar')
         <div class="container" style="overflow-x: hidden;margin-top:22px">
             @include('inc.messages')

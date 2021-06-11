@@ -6,7 +6,7 @@
     <div class="container">
     <div class="row" style="padding:20px">
         <div class="col-lg-4 col-md-12" style="margin-top:30px;padding:15px">
-            <img style="width:100%" src="/storage/cover_images/{{$post->cover_image}}">
+            <img style="width:100%" src="/storage/cover_images/thumb.{{$post->cover_image}}">
         </div>
         
         <div class="showboard col-lg-8 col-md-12">

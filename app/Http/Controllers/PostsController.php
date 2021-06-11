@@ -59,6 +59,12 @@ class PostsController extends Controller
         $posts2 = Post::orderBy('created_at','desc')->where('type', '2')->paginate(10);
         return view('posts.index')->with('posts', $posts2)->with('bulletin', $bulletin)->with('carousel', $carousel);
     }
+    public function type3(){
+        $bulletin = Bulletin::find(1);
+        $carousel = 0;
+        $posts3 = Post::orderBy('created_at','desc')->where('type', '3')->paginate(10);
+        return view('posts.index')->with('posts', $posts3)->with('bulletin', $bulletin)->with('carousel', $carousel);
+    }
     public function search(Request $request){
         $this->validate($request, [
             'keyword' => 'required'
@@ -168,9 +174,10 @@ class PostsController extends Controller
 
         // Check for correct user
         //if(auth()->user()->id !==$post->user_id){
-        if(auth()->user()->privilege !=='sa_admin'){
+        if(auth()->user()->privilege =='csmu_user'){
             return redirect('/posts')->with('error', 'Unauthorized Page');
         }
+        
 
         return view('posts.edit')->with('post', $post);
     }
@@ -253,7 +260,7 @@ class PostsController extends Controller
         }
 
         // Check for correct user
-        if(auth()->user()->privilege !=='sa_admin'){
+        if(auth()->user()->privilege !=='sa_admin' || auth()->user()->privilege !=='store_user'){
             return redirect('/posts')->with('error', 'Unauthorized Page');
         }
 

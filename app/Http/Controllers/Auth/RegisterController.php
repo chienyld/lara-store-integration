@@ -65,12 +65,35 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            //'privilege' => $data['privilege'],
-            'privilege' => 'csmu_user',
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if($data['privilege']=='csmu_user'){
+            return User::create([
+                //'privilege' => $data['privilege'],
+                'privilege' => 'csmu_user',
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'active' => true,
+            ]);
+        }
+        elseif($data['privilege']=='store_user'){
+            return User::create([
+                //'privilege' => $data['privilege'],
+                'privilege' => 'store_user',
+                'active' => false,
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
+        else{
+            return User::create([
+                //'privilege' => $data['privilege'],
+                'privilege' => 'csmu_user',
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'active' => false,
+            ]);
+        }
     }
 }

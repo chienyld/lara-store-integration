@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
     <h1>Create Post</h1>
     {!! Form::open(['action' => 'App\Http\Controllers\PostsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
@@ -17,15 +18,17 @@
         </div>
         <div class="form-group">
             {{Form::label('type', '類別')}}<br>
-            {{Form::label('type', 'Ａ')}}
+            {{Form::label('type', '醫療器材')}}
             {{Form::radio('type', '0', ['class' => 'form-control'])}}
-            {{Form::label('type', '飲品')}}
+            {{Form::label('type', '保健食品')}}
             {{Form::radio('type', '1', ['class' => 'form-control'])}}
-            {{Form::label('type', '咖啡豆')}}
+            {{Form::label('type', '日常用品')}}
             {{Form::radio('type', '2', ['class' => 'form-control'])}}
+            {{Form::label('type', '餐點飲品')}}
+            {{Form::radio('type', '3', ['class' => 'form-control'])}}
         </div>
         <div class="form-group">
-            {{Form::label('body', 'Body')}}
+            {{Form::label('body', '內容')}}
             {{Form::textarea('body', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Body Text'])}}
         </div>
         <label class="btn btn-primary">選擇圖片
@@ -35,4 +38,5 @@
         </label><br><br>
         {{Form::submit('送出', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
+</div>
 @endsection

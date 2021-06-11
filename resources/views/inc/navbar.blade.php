@@ -1,5 +1,5 @@
 <!--/* Copyright © 2020 Chien-Yu Lin. All rights reserved.*/-->
-<nav class="navbar navbar-inverse" style="margin-bottom:0">
+<nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fff">
     <div class="container">
         <div class="navbar-header">
 
@@ -17,10 +17,9 @@
             </button>
 
             <!-- Branding Image -->
-            <a style="font-size:15px;color:#fff" class="navbar-brand" href="{{ url('/') }}">
-                &nbsp<span>沏啡</span>
-                <!--{{ config('app.name', '沏啡') }}-->
-                <span style="font-size:0.7em;color:#deedfb">chiefe coffee</span>
+            <a style="font-size:15px;color:#6e6e6e" class="navbar-brand" href="{{ url('/') }}">
+                &nbsp<span>醫院周邊整合平台</span>
+                <!--{{ config('app.name', '醫院整合系統') }}-->
             </a>
         </div>
 
@@ -40,9 +39,10 @@
                 </form>
                 </li>
                 <li><a href="/posts">&nbsp首頁</a></li>
-                <li><a href="/type0">&nbsp器具</a></li>
-                <li><a href="/type1">&nbsp飲品</a></li>   
-                <li><a href="/type2">&nbsp咖啡豆</a></li>
+                <li><a href="/type0">&nbsp醫療器材</a></li>
+                <li><a href="/type1">&nbsp保健食品</a></li>   
+                <li><a href="/type2">&nbsp日常用品</a></li>
+                <li><a href="/type3">&nbsp餐點飲品</a></li>
                 <li><a href="/about">&nbsp關於我們</a></li>
               
             </ul>
@@ -61,7 +61,7 @@
                     <!--<div style="position:absolute;background-color:red;border-radius:50%;height:13px;width:13px;left:30px;top:12px;color:#fff;text-align:center"><span  style="font-size:2px">1</span></div>-->
                     <div>
                         <a href="/cart">
-                        &nbsp<i class="fas fa-shopping-cart" style="color:#deedfb;margin:18px"></i></a>
+                        &nbsp<i class="fas fa-shopping-cart" style="color:#6e6e6e;margin:18px"></i></a>
                     </div>
                     </div>
                     </li>
@@ -74,14 +74,16 @@
                             <!--<li><a href="/send/{{ Auth::user()->id }}">我的清單</a></li>-->
                             <li><a href="/cart">我的清單</a></li>
                             <li><a href="/myorder">我的訂單</a></li>
-                            @if(Auth::user()->privilege=='sa_admin')
+                            @if(Auth::user()->privilege=='sa_admin' || Auth::user()->privilege=='store_user')
                             <li><a href="/order">出貨管理</a></li>
                             <li><a href="/dashboard">品項管理</a></li>
+                            @if(Auth::user()->privilege=='sa_admin')
                             <li><a href="/bulletin">公告管理</a></li>
                             <li><a href="/rules">關於我們</a></li>
                             <li><a href="/account">帳戶管理</a></li>
                             <li><a href="/carousel">輪播卡片</a></li>
                             
+                            @endif
                             @endif
                             <li>
                                 <a href="{{ route('logout') }}"

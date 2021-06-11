@@ -8542,7 +8542,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.status == true) {
         return '停權';
       } else {
-        return '恢復';
+        return '許可';
       }
     },
     actionButton: function actionButton() {
@@ -45458,61 +45458,23 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("tr", [
-              _c("td", [_vm._v("運費:")]),
+              _c("td", [_vm._v("手續費:")]),
               _vm._v(" "),
               _vm.shipping == 0
-                ? _c("td", [_vm._v(_vm._s("$" + 0) + " ")])
-                : _c("td", [_vm._v(_vm._s("$" + 60) + " ")])
+                ? _c("td", [_vm._v(_vm._s("$" + 10) + " ")])
+                : _c("td", [_vm._v(_vm._s("$" + 10) + " ")])
             ]),
             _vm._v(" "),
             _c("tr", [
               _c("td", [_vm._v("總金額:")]),
               _vm._v(" "),
-              _vm.shipping == 0
+              _vm.shipping == 1
                 ? _c("td", [_vm._v(_vm._s("$" + _vm.details.total) + " ")])
                 : _c("td", [
-                    _vm._v("$" + _vm._s(parseInt(_vm.details.total) + 60) + " ")
+                    _vm._v("$" + _vm._s(parseInt(_vm.details.total) + 10) + " ")
                   ])
             ])
           ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.shipping,
-                expression: "shipping"
-              }
-            ],
-            attrs: { type: "radio", id: "store", value: "0" },
-            domProps: { checked: _vm._q(_vm.shipping, "0") },
-            on: {
-              change: function($event) {
-                _vm.shipping = "0"
-              }
-            }
-          }),
-          _c("label", { attrs: { for: "store" } }, [_vm._v("   門市自取")]),
-          _vm._v("     \n                "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.shipping,
-                expression: "shipping"
-              }
-            ],
-            attrs: { type: "radio", id: "ship", value: "1" },
-            domProps: { checked: _vm._q(_vm.shipping, "1") },
-            on: {
-              change: function($event) {
-                _vm.shipping = "1"
-              }
-            }
-          }),
-          _c("label", { attrs: { for: "ship" } }, [_vm._v("   宅配寄送")]),
           _vm._v(" "),
           _vm.shipping == 1
             ? _c("input", {
@@ -60170,8 +60132,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/chien/MAMP/www/lara-vue-shop-master/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/chien/MAMP/www/lara-vue-shop-master/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/chien/MAMP/www/lara-store-integration/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/chien/MAMP/www/lara-store-integration/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ }),

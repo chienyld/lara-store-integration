@@ -40,18 +40,18 @@
                         <td>{{ '$' + details.total }} </td>
                     </tr>
                     <tr>
-                        <td>運費:</td>
-                        <td v-if="shipping==0">{{ '$' + 0 }} </td>
-                        <td v-else>{{ '$' + 60 }} </td>
+                        <td>手續費:</td>
+                        <td v-if="shipping==0">{{ '$' + 10 }} </td>
+                        <td v-else>{{ '$' + 10 }} </td>
                     </tr>
                     <tr>
                         <td>總金額:</td>
-                        <td v-if="shipping==0">{{ '$' + details.total }} </td>
-                        <td v-else>${{ parseInt(details.total)+60 }} </td>
+                        <td v-if="shipping==1">{{ '$' + details.total }} </td>
+                        <td v-else>${{ parseInt(details.total)+10 }} </td>
                     </tr>
                 </table>
-                <input type="radio" id="store" v-model="shipping" value="0"><label for="store"> &nbsp 門市自取</label>&nbsp&nbsp&nbsp&nbsp&nbsp
-                <input type="radio" id="ship" v-model="shipping" value="1"><label for="ship"> &nbsp 宅配寄送</label>
+                <!--<input type="radio" id="store" v-model="shipping" value="0"><label for="store"> &nbsp 門市自取</label>&nbsp&nbsp&nbsp&nbsp&nbsp
+                <input type="radio" id="ship" v-model="shipping" value="1"><label for="ship"> &nbsp 宅配寄送</label>-->
                 <input v-if="shipping==1" v-model="address" placeholder="地址" class="form-control" style="border-radius:8px">
                 <button v-if="shipping==1" onclick="location.href='http://localhost:8000/choose'" class="btn-primary" style="border-radius:8px">choose</button>
                 <br>

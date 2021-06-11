@@ -31,7 +31,7 @@
                                     <verify-status2 datastatus="{{ $order->status }}"></verify-status2>
                                     </div>
                                     <div class="col-lg-6">
-                                        @if(Auth::user()->privilege=='sa_admin')
+                                        @if(Auth::user()->privilege=='sa_admin' || Auth::user()->privilege=='store_user')
                                         <verify-status token="{{ csrf_token() }}" datastatus="{{ $order->status }}" dataid="{{ $order->id }}"></verify-status>
                                         @else
                                         <div v-if="{{$order->status}}">商品已出貨，請耐心等候</div>

@@ -36,10 +36,10 @@ class CarouselController extends Controller
             $path = $request->file('card_image')->storeAs('public/card_image', $fileNameToStore);
 		
 	    // make thumbnails
-	    //$thumbStore = 'thumb.'.$filename.'_'.time().'.'.$extension;
-            //$thumb = Image::make($request->file('card_image')->getRealPath());
+	    $thumbStore = 'thumb.'.$filename.'_'.time().'.'.$extension;
+            $thumb = Image::make($request->file('card_image')->getRealPath());
             //$thumb->resize(80, 80);
-            //$thumb->save('storage/card_images/'.$thumbStore);
+            $thumb->save('storage/card_image/'.$thumbStore);
 		
         } else {
             $fileNameToStore = 'noimage.jpg';

@@ -10,23 +10,21 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        <!--<div class="form-group{{ $errors->has('privilege') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('privilege') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label" style="font-size:1.5rem">帳戶權限</label>
 
                             <div class="col-md-6">
-                                {{Form::label('privilege', '管理者')}}
-                                {{Form::radio('privilege', 'sa_admin', ['class' => 'form-control'])}}&nbsp&nbsp&nbsp&nbsp&nbsp
-                                {{Form::label('privilege', '會員')}}
+                                {{Form::label('privilege', '商店會員（需審核）')}}
+                                {{Form::radio('privilege', 'store_user', ['class' => 'form-control'])}}&nbsp&nbsp&nbsp&nbsp&nbsp
+                                {{Form::label('privilege', '一般會員')}}
                                 {{Form::radio('privilege', 'csmu_user', ['class' => 'form-control'])}}&nbsp&nbsp&nbsp&nbsp&nbsp
-                                {{Form::label('privilege', 'Member')}}
-                                {{Form::radio('privilege', 'csmu_member', ['class' => 'form-control'])}}&nbsp&nbsp&nbsp&nbsp&nbsp
                                 @if ($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('帳戶權限') }}</strong>
+                                        <strong>{{ $errors->first('帳戶種類') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>-->
+                        </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">姓名</label>

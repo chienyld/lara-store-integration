@@ -18,7 +18,7 @@
     @foreach($carousel as $card)
     
     <div class="col-lg-4 col-sm-12">
-        <img style="width:100%" src="/storage/card_image/{{$card->card_image}}"><br><br>
+        <img style="width:100%" src="/storage/card_image/thumb.{{$card->card_image}}"><br><br>
     
         {!! Form::open(['action' => ['App\Http\Controllers\CarouselController@update',$card->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <label class="btn btn-primary">更改圖片
