@@ -148,8 +148,8 @@ class SendController extends Controller
             $order->shipping = $shipping;
             $order->payment = false;
             if($shipping==0){ 
-                $order->total = $totalAdding;
-                $order->address = 0;
+                $order->total = $totalAdding+10;
+                $order->address = $request->input('address');
             }else{
                 $order->total = $totalAdding+60;
                 $order->address = $request->input('address');

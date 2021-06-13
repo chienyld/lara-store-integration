@@ -12,6 +12,7 @@
         <div class="showboard col-lg-8 col-md-12">
             <div style="padding:20px;margin-top:10px">  
                 <div><h1>{{$post->title}}</h1></div><br>                
+                <div><span>{{$post->user->name}}</h1></span><br>                
                 <div style="font-size:1em;color:#0f4c81;right:1px">
                     價格 ${!!$post->deposit!!}
                 </div>

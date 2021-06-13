@@ -8328,6 +8328,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendItem: function sendItem() {
+      console.log(this.address);
+
       var _this = this;
 
       var arr = [];
@@ -8388,7 +8390,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.$http.post('/borrows', {
           _token: _this.token,
           shipping: _this.shipping,
-          address: _this.address,
+          address: String(_this.address),
           id: uid,
           name: uname,
           deposit: uprice,
@@ -45476,48 +45478,32 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm.shipping == 1
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.address,
-                    expression: "address"
-                  }
-                ],
-                staticClass: "form-control",
-                staticStyle: { "border-radius": "8px" },
-                attrs: { placeholder: "地址" },
-                domProps: { value: _vm.address },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.address = $event.target.value
-                  }
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.address,
+                expression: "address"
+              }
+            ],
+            staticClass: "form-control",
+            staticStyle: { "border-radius": "8px" },
+            attrs: { placeholder: "房號/部門/棟別/樓層" },
+            domProps: { value: _vm.address },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.shipping == 1
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn-primary",
-                  staticStyle: { "border-radius": "8px" },
-                  attrs: {
-                    onclick: "location.href='http://localhost:8000/choose'"
-                  }
-                },
-                [_vm._v("choose")]
-              )
-            : _vm._e(),
+                _vm.address = $event.target.value
+              }
+            }
+          }),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _vm.shipping == 0 || _vm.address
+          _vm.shipping == 0 && _vm.address && _vm.items.length > 0
             ? _c(
                 "button",
                 {
@@ -60132,8 +60118,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/chien/MAMP/www/lara-store-integration/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/chien/MAMP/www/lara-store-integration/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/chien/MAMP/www/lamp/lara-store-integration/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/chien/MAMP/www/lamp/lara-store-integration/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ }),

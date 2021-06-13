@@ -52,12 +52,12 @@
                 </table>
                 <!--<input type="radio" id="store" v-model="shipping" value="0"><label for="store"> &nbsp 門市自取</label>&nbsp&nbsp&nbsp&nbsp&nbsp
                 <input type="radio" id="ship" v-model="shipping" value="1"><label for="ship"> &nbsp 宅配寄送</label>-->
-                <input v-if="shipping==1" v-model="address" placeholder="地址" class="form-control" style="border-radius:8px">
-                <button v-if="shipping==1" onclick="location.href='http://localhost:8000/choose'" class="btn-primary" style="border-radius:8px">choose</button>
+                <input v-model="address" placeholder="房號/部門/棟別/樓層" class="form-control" style="border-radius:8px">
+                <!--<button v-if="shipping==1" onclick="location.href='http://localhost:8000/choose'" class="btn-primary" style="border-radius:8px">choose</button>-->
                 <br>
                 
                 
-                <button v-if="shipping==0 || address " v-on:click="sendItem()" class="btn-primary">結帳</button>
+                <button v-if="shipping==0 && address && items.length>0" v-on:click="sendItem()" class="btn-primary">結帳</button>
         </div>
     </div>
 
@@ -133,6 +133,7 @@ export default {
             });
         },
         sendItem: function() {
+            console.log(this.address);
             var _this = this;
             var arr = [];
             this.items.forEach(function(item){
@@ -184,7 +185,7 @@ export default {
             _this.$http.post('/borrows',{
                 _token:_this.token,
                 shipping:_this.shipping,
-                address:_this.address,
+                address:String(_this.address),
                 id:uid,
                 name:uname,
                 deposit:uprice,

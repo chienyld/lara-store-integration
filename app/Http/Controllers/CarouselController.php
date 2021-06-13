@@ -13,7 +13,7 @@ class CarouselController extends Controller
     public function index(){
         $carousel = Carousel::orderBy('created_at','desc')->get();
         //$carousel = Carousel::find(1)->get();
-        return view('Carousel')->with('carousel',$carousel);
+        return view('carousel')->with('carousel',$carousel);
     }
 
     public function store(Request $request)
